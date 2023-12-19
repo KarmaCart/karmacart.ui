@@ -6,13 +6,31 @@ import {
   UserOutlined,
   ScanOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
-const { Header, Sider, Content } = Layout;
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Layout, Menu, Button, theme, } from 'antd';
+import BarcodeScanner from './pages/BarcodeScanner';
+import LoginScreen from './pages/LoginScreen';
+import MoreInfo from './pages/MoreInfo'
+const { Header, Sider } = Layout;
 const App = () => {
+
   const [collapsed, setCollapsed] = useState(false);
+
   const {
-    token: { colorBgContainer, borderRadiusLG, colorBgMask },
+    token: { colorBgContainer, colorBgMask },
   } = theme.useToken();
+
+  const handleMenuClick = (e) => {
+    console.log('Menu item clicked:', e.key);
+    if ('LoginScreen' === e.key) {
+      window.location.assign('/')
+    } else if ('BarcodeScanner' === e.key) {
+      window.location.assign('/scan')
+    } else if ('MoreInfo' === e.key) {
+      window.location.assign('/more-info')
+    }
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -26,19 +44,20 @@ const App = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
+          onClick={handleMenuClick}
           items={[
             {
-              key: '1',
+              key: 'LoginScreen',
               icon: <UserOutlined />,
               label: 'Account',
             },
             {
-              key: '2',
+              key: 'BarcodeScanner',
               icon: <ScanOutlined />,
               label: 'Scan',
             },
             {
-              key: '3',
+              key: 'MoreInfo',
               icon: <InfoCircleOutlined />,
               label: 'More Info',
             },
@@ -63,17 +82,13 @@ const App = () => {
             }}
           />
         </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          Content
-        </Content>
+        <Router>
+            <Routes>
+              <Route path="/" element={<LoginScreen />} />
+              <Route path="/scan" element={<BarcodeScanner />} />
+              <Route path="/more-info" element={<MoreInfo />} />
+            </Routes>
+        </Router>
       </Layout>
     </Layout>
   );

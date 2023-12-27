@@ -7,9 +7,9 @@ import {
 } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer } from 'antd';
-import BarcodeScanner from './pages/BarcodeScanner';
-import LoginScreen from './pages/LoginScreen';
-import MoreInfo from './pages/MoreInfo'
+import Scan from './pages/ScanPage';
+import LoginScreen from './pages/LoginPage';
+import MoreInfo from './pages/MoreInfoPage'
 const { Header, Footer } = Layout;
 
 const App = () => {
@@ -24,20 +24,24 @@ const App = () => {
       label,
     };
   }
+
+  const LOGIN_PAGE = 'LOGIN_PAGE'
+  const SCAN_PAGE = 'SCAN_PAGE'
+  const MORE_INFO_PAGE = 'MORE_INFO_PAGE'
   
   const items = [
-    getItem('Account', 'LoginScreen', <UserOutlined />),
-    getItem('Scan', 'BarcodeScanner', <ScanOutlined />),
-    getItem('More Info', 'MoreInfo', <InfoCircleOutlined />),
+    getItem('Account', LOGIN_PAGE, <UserOutlined />),
+    getItem('Scan', SCAN_PAGE, <ScanOutlined />),
+    getItem('More Info', MORE_INFO_PAGE, <InfoCircleOutlined />),
   ];
 
   const handleMenuClick = (e) => {
     console.log('Menu item clicked:', e.key);
-    if ('LoginScreen' === e.key) {
+    if (LOGIN_PAGE === e.key) {
       window.location.assign('/')
-    } else if ('BarcodeScanner' === e.key) {
+    } else if (SCAN_PAGE === e.key) {
       window.location.assign('/scan')
-    } else if ('MoreInfo' === e.key) {
+    } else if (MORE_INFO_PAGE === e.key) {
       window.location.assign('/more-info')
     }
   };
@@ -81,7 +85,7 @@ const App = () => {
         <Router>
             <Routes>
               <Route path="/" element={<LoginScreen />} />
-              <Route path="/scan" element={<BarcodeScanner />} />
+              <Route path="/scan" element={<Scan />} />
               <Route path="/more-info" element={<MoreInfo />} />
             </Routes>
         </Router>

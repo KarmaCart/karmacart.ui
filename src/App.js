@@ -9,7 +9,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer } from 'antd';
 import Scan from './pages/ScanPage';
 import LoginScreen from './pages/LoginPage';
-import MoreInfo from './pages/MoreInfoPage'
+import MoreInfo from './pages/MoreInfoPage';
+import logo from './images/karmacart-logo.png';
 const { Header, Footer } = Layout;
 
 const App = () => {
@@ -70,7 +71,7 @@ const App = () => {
         }}
         >
           {/* Placeholder to keep the title centered */}
-          <div style={{ flex: 1 }}></div>
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}><img src={logo} alt="logo" width={40} height={40} /></div>
           <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: '20px' }}>KarmaCart</div>
           {/* Hamburger Button */}
           <div style={{ flex: 1, textAlign: 'right' }}>

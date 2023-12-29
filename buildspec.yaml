@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo $CROSS_ACCOUNT_ROLE
+      - echo $TARGET_ACCOUNT_ID
+      - cd $CODEBUILD_SRC_DIR
+      - chmod +x cross-account-setup.sh
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install      
+  build:
+    commands:
+      - echo "Start Deploy"
+      - cd $CODEBUILD_SRC_DIR
+      - . ./cross-account-setup.sh
+      - >
+        aws cloudformation deploy --stack-name karma-cart-ui-cloudformation --template-file src/aws/karma-cart-ui-cloudformation.yaml --no-fail-on-empty-changeset
+      - npm run build
+      - echo "End Deploy"
+  post_build:
+    commands:
+      - aws s3 cp --recursive --acl public-read ./build s3://karma-cart-ui-log.s3.amazonaws.com
+      - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://karma-cart-ui-log.s3.amazonaws.com
+      

@@ -9,11 +9,7 @@ CFN_EXECUTION_ROLE=$(cat $PARAM_FILE | jq -r '.CFN_EXECUTION_ROLE')
 echo $CFN_EXECUTION_ROLE
 ##################################################################################################################
 
-ls
-
 ############################################## CDK Bootstrap & Deploy ############################################
-cdk bootstrap
-
 cdk synth -r $CFN_EXECUTION_ROLE
 
 cdk diff -r $CFN_EXECUTION_ROLE

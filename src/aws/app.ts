@@ -9,4 +9,5 @@ new KarmaCartUiStack(app, 'KarmaCartUiStack', {
     region: 'us-east-2',
     account: '740207786562'
   },
+  stackName: 'KarmaCartUiStack'
 });

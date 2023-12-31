@@ -17,7 +17,7 @@ export class KarmaCartUiStack extends Stack {
       this,
       'deployStaticWebsite',
       {
-        sources: [Source.asset('../build')],
+        sources: [Source.asset('build')],
         destinationBucket: myBucket,
       }
     );

@@ -36,7 +36,7 @@ jobs:
       # Installs CDK and other prerequisites
       - name: Prerequisite Installation
         run: |
-          sudo npm install -g aws-cdk@"<3.0.0"
+          sudo npm install -g aws-cdk
           cdk --version
           aws s3 ls
       # Build and Deploy CDK application

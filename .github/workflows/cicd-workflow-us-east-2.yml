@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v2
       # Sets up AWS profile.
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.TOOLS_ACCOUNT_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.TOOLS_ACCOUNT_SECRET_ACCESS_KEY }}

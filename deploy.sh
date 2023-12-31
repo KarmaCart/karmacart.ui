@@ -4,7 +4,7 @@ npm run build
 ################################################################################################################
 
 ###################################### Cloudformation Execution Role ############################################
-PARAM_FILE="src/params/cdk-stack-param.json"
+PARAM_FILE="src/aws/cdk-stack-param.json"
 CFN_EXECUTION_ROLE=$(cat $PARAM_FILE | jq -r '.CFN_EXECUTION_ROLE')
 echo $CFN_EXECUTION_ROLE
 ##################################################################################################################

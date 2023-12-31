@@ -1,9 +1,14 @@
 name: KarmaCart UI Stack CICD Workflow (us-west-2)
 # This workflow is triggered on pushes to the repository branch master.
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deployment Environment"
+        type: choice
+        options:
+          - "eng"
+          - "prod"
 
 # Initializes environment variables for the workflow
 env:

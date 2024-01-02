@@ -9,6 +9,12 @@ export class KarmaCartUiStack extends Stack {
 
     // The code that defines your stack goes here
     const myBucket = new Bucket(this, 'karma-cart-ui', {
+      blockPublicAccess: {
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false
+      },
       publicReadAccess: true,
       removalPolicy: RemovalPolicy.DESTROY,
       websiteIndexDocument: 'index.html',

@@ -36,7 +36,6 @@ jobs:
       # Installs CDK and other prerequisites
       - name: Prerequisite Installation
         run: |
-          sudo npm install ts-node
           sudo npm install -g aws-cdk
           cdk --version
           aws s3 ls

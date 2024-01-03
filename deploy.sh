@@ -13,5 +13,5 @@ cdk synth -r $CFN_EXECUTION_ROLE
 
 cdk diff -r $CFN_EXECUTION_ROLE
 
-cdk deploy \* -r $CFN_EXECUTION_ROLE --require-approval never --verbose
+cdk deploy \* -r $CFN_EXECUTION_ROLE --require-approval never
 ###################################################################################################################

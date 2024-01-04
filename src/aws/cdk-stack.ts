@@ -18,6 +18,7 @@ export class KarmaCartUiStack extends Stack {
       publicReadAccess: true,
       removalPolicy: RemovalPolicy.DESTROY,
       websiteIndexDocument: 'index.html',
+      websiteErrorDocument: 'index.html'
     });
     new BucketDeployment(
       this,

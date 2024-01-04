@@ -94,7 +94,7 @@ const App = () => {
             textAlign: 'center',
           }}
         >
-        KarmaCart Created by Anderson Buckles
+        KarmaCart created by Anderson Buckles
         </Footer>
     </Layout>
   );

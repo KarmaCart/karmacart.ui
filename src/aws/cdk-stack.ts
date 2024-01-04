@@ -19,7 +19,7 @@ export class KarmaCartUiStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
       websiteIndexDocument: 'index.html',
     });
-    const deployment = new BucketDeployment(
+    new BucketDeployment(
       this,
       'deployStaticWebsite',
       {

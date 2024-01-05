@@ -11,5 +11,7 @@ new KarmaCartUiStack(app, 'KarmaCartUiStack', {
     region: 'us-east-2',
     account: awsAccountNumber
   },
-  stackName: 'KarmaCartUiStack'
+  stackName: 'KarmaCartUiStack',
+  sourcePath: 'build',
+  domainName: 'karma-cart.com',
 });

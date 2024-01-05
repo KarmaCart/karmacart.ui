@@ -8,8 +8,6 @@ PARAM_FILE="src/aws/cdk-stack-param.json"
 CFN_EXECUTION_ROLE=$(cat $PARAM_FILE | jq -r '.CFN_EXECUTION_ROLE')
 ##################################################################################################################
 
-echo $KARMACART_ENVIRONMENT
-
 ############################################## CDK Bootstrap & Deploy ############################################
 cdk synth -r $CFN_EXECUTION_ROLE
 

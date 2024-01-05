@@ -22,10 +22,10 @@ jobs:
     steps:
       - name: Determine Cross Account Role
         run: |
-          if [ "${{ github.event.inputs.environment }}" = "eng" ]; then 
+          if [ "${{ github.event.inputs.karmacart-environment }}" = "eng" ]; then 
             echo "CROSS_ACCOUNT_ROLE_ARN=arn:aws:iam::${{ secrets.ENG_AWS_ACCOUNT_NUMBER }}:role/git-action-cross-account-role" >> $GITHUB_ENV
             echo "Deploying ENG Environment"
-          elif [ "${{ github.event.inputs.environment }}" = "prod" ]; then 
+          elif [ "${{ github.event.inputs.karmacart-environment }}" = "prod" ]; then 
             echo "CROSS_ACCOUNT_ROLE_ARN=arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/git-action-cross-account-role" >> $GITHUB_ENV
             echo "Deploying PROD Environment"
           fi

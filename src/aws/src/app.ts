@@ -3,8 +3,8 @@ import 'source-map-support/register';
 import { App } from 'aws-cdk-lib';
 import { KarmaCartUiStack } from './cdk-stack';
 
-let karamcartEnvironment = process.env.KARAMCART_ENVIRONMENT;
-let awsAccountNumber = process.env.AWS_ACCOUNT_NUMBER;
+const karamcartEnvironment = process.env.KARAMCART_ENVIRONMENT;
+const awsAccountNumber = process.env.AWS_ACCOUNT_NUMBER;
 
 const app = new App();
 new KarmaCartUiStack(app, 'KarmaCartUiStack', karamcartEnvironment!, {

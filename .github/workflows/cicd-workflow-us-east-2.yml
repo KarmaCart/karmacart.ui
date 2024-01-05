@@ -42,7 +42,7 @@ jobs:
       # Build and Deploy CDK application
       - name: Build & Deploy
         run: |
-          export KARMACART_ENVIRONMENT="${{ github.event.inputs.karmacart-environment }}
+          export KARMACART_ENVIRONMENT=${{ github.event.inputs.karmacart-environment }}
           cd $GITHUB_WORKSPACE
           ls -a
           chmod 700 deploy.sh

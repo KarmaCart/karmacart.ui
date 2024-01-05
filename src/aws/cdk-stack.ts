@@ -8,7 +8,7 @@ export class KarmaCartUiStack extends Stack {
     super(scope, id, props);
 
     // The code that defines your stack goes here
-    const myBucket = new Bucket(this, 'karma-cart-ui', {
+    const myBucket = new Bucket(this, `karma-cart-ui-${environment}`, {
       blockPublicAccess: {
         blockPublicAcls: false,
         blockPublicPolicy: false,

@@ -20,13 +20,15 @@ jobs:
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
-      - name: Determine Cross Account Role
+      - name: Determine AWS Account variables
         run: |
           if [ "${{ github.event.inputs.karmacart-environment }}" = "eng" ]; then 
             echo "CROSS_ACCOUNT_ROLE_ARN=arn:aws:iam::${{ secrets.ENG_AWS_ACCOUNT_NUMBER }}:role/git-action-cross-account-role" >> $GITHUB_ENV
+            echo "AWS_ACCOUNT_NUMBER=${{ secrets.ENG_AWS_ACCOUNT_NUMBER }}" >> $GITHUB_ENV
             echo "Deploying ENG Environment"
           elif [ "${{ github.event.inputs.karmacart-environment }}" = "prod" ]; then 
             echo "CROSS_ACCOUNT_ROLE_ARN=arn:aws:iam::${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}:role/git-action-cross-account-role" >> $GITHUB_ENV
+            echo "AWS_ACCOUNT_NUMBER=${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}" >> $GITHUB_ENV
             echo "Deploying PROD Environment"
           fi
       # Checkout code from git repo branch configured above, under folder $GITHUB_WORKSPACE.
@@ -52,6 +54,7 @@ jobs:
       - name: Build & Deploy
         run: |
           export KARMACART_ENVIRONMENT=${{ github.event.inputs.karmacart-environment }}
+          export AWS_ACCOUNT_NUMBER=${{ env.AWS_ACCOUNT_NUMBER }}
           cd $GITHUB_WORKSPACE
           ls -a
           chmod 700 deploy.sh

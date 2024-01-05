@@ -3,7 +3,7 @@ name: KarmaCart UI Stack CICD Workflow (us-east-2)
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      karmacart-environment:
         description: "Deployment Environment"
         type: choice
         options:
@@ -42,6 +42,7 @@ jobs:
       # Build and Deploy CDK application
       - name: Build & Deploy
         run: |
+          export KARMACART_ENVIRONMENT="${{ github.event.inputs.karmacart-environment }}
           cd $GITHUB_WORKSPACE
           ls -a
           chmod 700 deploy.sh

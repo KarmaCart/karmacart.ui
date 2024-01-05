@@ -20,6 +20,13 @@ jobs:
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
+      - name: Determine AWS Account Number
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "eng" ]; then 
+            echo "AWS_ACCOUNT_NUMBER=${{ secrets.ENG_AWS_ACCOUNT_NUMBER }}" >> $GITHUB_ENV  # Replace with your eng AWS account number
+          elif [ "${{ github.event.inputs.environment }}" = "prod" ]; then 
+            echo "AWS_ACCOUNT_NUMBER=${{ secrets.PROD_AWS_ACCOUNT_NUMBER }}" >> $GITHUB_ENV  # Replace with your prod AWS account number
+          fi
       # Checkout code from git repo branch configured above, under folder $GITHUB_WORKSPACE.
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,7 +37,7 @@ jobs:
           aws-access-key-id: ${{ secrets.TOOLS_ACCOUNT_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.TOOLS_ACCOUNT_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.REGION }}
-          role-to-assume: ${{ secrets.CROSS_ACCOUNT_ROLE }}
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_NUMBER }}:role/git-action-cross-account-role
           role-duration-seconds: 1200
           role-session-name: GitActionDeploymentSession
       # Installs CDK and other prerequisites

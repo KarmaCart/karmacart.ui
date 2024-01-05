@@ -32,7 +32,7 @@ export class KarmaCartUiStack extends Stack {
       'Certificate',
       {
         domainName: domainName,
-        validation: CertificateValidation.fromDns(),
+        validation: CertificateValidation.fromEmail(),
       }
     );
 

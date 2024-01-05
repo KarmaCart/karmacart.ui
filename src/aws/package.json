@@ -1,0 +1,22 @@
+{
+  "name": "karmacart.ui.stack",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk-bootstrap": "cdk bootstrap",
+    "cdk-synth": "cdk synth",
+    "cdk-deploy": "cdk deploy",
+    "cdk-destroy": "cdk destroy"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.6",
+    "aws-cdk": "2.69.0",
+    "ts-node": "^10.9.1",
+    "aws-cdk-lib": "2.69.0",
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.21",
+    "typescript": "^5.3.3"
+  }
+}

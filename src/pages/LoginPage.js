@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 
-const LoginScreen = () => {
+const LoginPage = () => {
 
   const onFinish = (e) => {
     console.log('form finished');
@@ -36,4 +36,4 @@ const LoginScreen = () => {
         );
 };
 
-export default LoginScreen
+export default LoginPage

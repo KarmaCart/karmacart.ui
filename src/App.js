@@ -8,7 +8,7 @@ import {
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import Scan from './pages/ScanPage';
-import LoginScreen from './pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 import MoreInfo from './pages/MoreInfoPage';
 const { Header, Footer } = Layout;
 
@@ -93,7 +93,7 @@ const App = () => {
         </Drawer>
         <Router>
             <Routes>
-              <Route path="/" element={<LoginScreen />} />
+              <Route path="/" element={<LoginPage />} />
               <Route path="/scan" element={<Scan />} />
               <Route path="/more-info" element={<MoreInfo />} />
             </Routes>

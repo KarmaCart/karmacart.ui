@@ -1,14 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
+import { useNavigate } from 'react-router-dom';
 
 const BarcodeScanner = () => {
   const scannerRef = useRef(null);
+  let navigate = useNavigate();
 
   const onScanSuccess = (decodedText, decodedResult) => {
     // Handle the scanned code as required.
     console.log(`Code matched = ${decodedText}`, decodedResult);
     // To stop scanning after first scan.
-    scannerRef.current.stop();
+    scannerRef.current.clear();
+    // Navigate to the item page
+    navigate('/item', { state: { barcode: decodedResult } });
   };
 
   const onScanFailure = (error) => {
@@ -16,8 +20,6 @@ const BarcodeScanner = () => {
   };
 
   useEffect(() => {
-
-    console.log('use effect')
     if (!scannerRef.current) {
       const html5QrcodeScanner = new Html5QrcodeScanner(
         "qr-reader",

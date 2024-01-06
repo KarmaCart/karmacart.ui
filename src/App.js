@@ -10,6 +10,7 @@ import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import ScanPage from './pages/ScanPage';
 import LoginPage from './pages/LoginPage';
 import MoreInfoPage from './pages/MoreInfoPage';
+import ItemPage from './pages/ItemPage';
 const { Header, Footer } = Layout;
 
 const App = () => {
@@ -96,6 +97,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/scan" element={<ScanPage />} />
+            <Route path="/item" element={<ItemPage />} />
             <Route path="/more-info" element={<MoreInfoPage />} />
           </Routes>
         <Footer

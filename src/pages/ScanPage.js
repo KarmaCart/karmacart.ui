@@ -4,7 +4,7 @@ import BarcodeScanner from '../components/BarcodeScanner';
 
 const { Content } = Layout;
 
-const Scan = () => {
+const ScanPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -26,4 +26,4 @@ const Scan = () => {
   );
 };
 
-export default Scan
+export default ScanPage

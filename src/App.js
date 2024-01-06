@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
-import Scan from './pages/ScanPage';
+import ScanPage from './pages/ScanPage';
 import LoginPage from './pages/LoginPage';
 import MoreInfoPage from './pages/MoreInfoPage';
 const { Header, Footer } = Layout;
@@ -94,7 +94,7 @@ const App = () => {
         <Router>
             <Routes>
               <Route path="/" element={<LoginPage />} />
-              <Route path="/scan" element={<Scan />} />
+              <Route path="/scan" element={<ScanPage />} />
               <Route path="/more-info" element={<MoreInfoPage />} />
             </Routes>
         </Router>

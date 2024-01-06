@@ -3,7 +3,7 @@ import { BlockPublicAccess, Bucket } from 'aws-cdk-lib/aws-s3';
 import { Construct } from "constructs";
 import { BucketDeployment, CacheControl, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager';
-import { CloudFrontAllowedMethods, CloudFrontWebDistribution, OriginAccessIdentity, SSLMethod, SecurityPolicyProtocol, ViewerCertificate } from 'aws-cdk-lib/aws-cloudfront';
+import { CloudFrontAllowedMethods, CloudFrontWebDistribution, GeoRestriction, OriginAccessIdentity, PriceClass, SSLMethod, SecurityPolicyProtocol, ViewerCertificate } from 'aws-cdk-lib/aws-cloudfront';
 import { CanonicalUserPrincipal, Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Metric } from 'aws-cdk-lib/aws-cloudwatch';
 
@@ -81,6 +81,8 @@ export class KarmaCartUiStack extends Stack {
       this,
       'karmaCartUiDistro',
       {
+        priceClass: PriceClass.PRICE_CLASS_100,
+        geoRestriction: GeoRestriction.allowlist('US'),
         viewerCertificate: viewerCert,
         originConfigs: [
           {

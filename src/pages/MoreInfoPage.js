@@ -3,7 +3,7 @@ import { Layout, theme } from 'antd';
 
 const { Content } = Layout;
 
-const LoginScreen = () => {
+const MoreInfoPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -32,4 +32,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen
+export default MoreInfoPage

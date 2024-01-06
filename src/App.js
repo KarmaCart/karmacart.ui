@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import Scan from './pages/ScanPage';
 import LoginPage from './pages/LoginPage';
-import MoreInfo from './pages/MoreInfoPage';
+import MoreInfoPage from './pages/MoreInfoPage';
 const { Header, Footer } = Layout;
 
 const App = () => {
@@ -95,7 +95,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/scan" element={<Scan />} />
-              <Route path="/more-info" element={<MoreInfo />} />
+              <Route path="/more-info" element={<MoreInfoPage />} />
             </Routes>
         </Router>
         <Footer

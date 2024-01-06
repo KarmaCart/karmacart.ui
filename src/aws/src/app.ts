@@ -8,7 +8,7 @@ const awsAccountNumber = process.env.AWS_ACCOUNT_NUMBER;
 const app = new App();
 new KarmaCartUiStack(app, 'KarmaCartUiStack', {
   env: {
-    region: 'us-east-2',
+    region: 'us-east-1',
     account: awsAccountNumber
   },
   stackName: 'KarmaCartUiStack',

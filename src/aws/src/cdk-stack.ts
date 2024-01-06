@@ -58,7 +58,7 @@ export class KarmaCartUiStack extends Stack {
       {
         certificateArn: cert.certificateArn,
         env: {
-          region: 'us-east-1',
+          region: props.env!.region!,
           account: props.env!.account!,
         },
         applyRemovalPolicy: cert.applyRemovalPolicy,

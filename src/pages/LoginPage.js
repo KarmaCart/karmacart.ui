@@ -4,7 +4,7 @@ import { Button, Form, Input } from 'antd';
 const LoginScreen = () => {
 
   const onFinish = (e) => {
-    console.log('form finished')
+    console.log('form finished');
   }
 
   return(

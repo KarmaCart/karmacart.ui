@@ -25,9 +25,9 @@ const App = () => {
     };
   }
 
-  const LOGIN_PAGE = 'LOGIN_PAGE'
-  const SCAN_PAGE = 'SCAN_PAGE'
-  const MORE_INFO_PAGE = 'MORE_INFO_PAGE'
+  const LOGIN_PAGE = 'LOGIN_PAGE';
+  const SCAN_PAGE = 'SCAN_PAGE';
+  const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
   
   const items = [
     getItem('Account', LOGIN_PAGE, <UserOutlined />),
@@ -38,11 +38,11 @@ const App = () => {
   const handleMenuClick = (e) => {
     console.log('Menu item clicked:', e.key);
     if (LOGIN_PAGE === e.key) {
-      window.location.assign('/')
+      window.location.assign('/');
     } else if (SCAN_PAGE === e.key) {
-      window.location.assign('/scan')
+      window.location.assign('/scan');
     } else if (MORE_INFO_PAGE === e.key) {
-      window.location.assign('/more-info')
+      window.location.assign('/more-info');
     }
   };
 

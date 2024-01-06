@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import { App } from 'aws-cdk-lib';
-import { KarmaCartUiStack } from './cdk-stack';
+import { KarmaCartUiStack } from './src/cdk-stack';
 
 const awsAccountNumber = process.env.AWS_ACCOUNT_NUMBER;
 

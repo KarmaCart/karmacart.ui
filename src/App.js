@@ -6,7 +6,7 @@ import {
   MenuOutlined
 } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Layout, Menu, Button, Drawer } from 'antd';
+import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import Scan from './pages/ScanPage';
 import LoginScreen from './pages/LoginPage';
 import MoreInfo from './pages/MoreInfoPage';
@@ -55,6 +55,14 @@ const App = () => {
   };
 
   return (
+        <ConfigProvider
+        theme={{
+          token: {
+            // Seed Token
+            colorPrimary: '#6BBA78'
+          },
+        }}
+      >
       <Layout
       style={{
         minHeight: '100vh',
@@ -67,6 +75,7 @@ const App = () => {
           width: '100%',
           display: 'flex',
           alignItems: 'center',
+          backgroundColor: '#6BBA78'
         }}
         >
           {/* Placeholder to keep the title centered */}
@@ -97,6 +106,7 @@ const App = () => {
         KarmaCart created by Anderson Buckles
         </Footer>
     </Layout>
+    </ConfigProvider>
   );
 };
 export default App;

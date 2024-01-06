@@ -5,7 +5,7 @@ import {
   ScanOutlined,
   MenuOutlined
 } from '@ant-design/icons';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import ScanPage from './pages/ScanPage';
 import LoginPage from './pages/LoginPage';
@@ -15,6 +15,8 @@ const { Header, Footer } = Layout;
 const App = () => {
 
   const [visible, setVisible] = useState(false);
+
+  let navigate = useNavigate();
 
   function getItem(label, key, icon, children) {
     return {
@@ -38,11 +40,11 @@ const App = () => {
   const handleMenuClick = (e) => {
     console.log('Menu item clicked:', e.key);
     if (LOGIN_PAGE === e.key) {
-      window.location.assign('/');
+      navigate('/');
     } else if (SCAN_PAGE === e.key) {
-      window.location.assign('/scan');
+      navigate('/scan');
     } else if (MORE_INFO_PAGE === e.key) {
-      window.location.assign('/more-info');
+      navigate('/more-info');
     }
   };
 
@@ -91,13 +93,11 @@ const App = () => {
         <Drawer title="Menu" width="200px" placement="right" onClick={onClose} onClose={onClose} open={visible}>
           <Menu defaultSelectedKeys={['1']} mode="inline" items={items} onClick={handleMenuClick} />
         </Drawer>
-        <Router>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/scan" element={<ScanPage />} />
-              <Route path="/more-info" element={<MoreInfoPage />} />
-            </Routes>
-        </Router>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/scan" element={<ScanPage />} />
+            <Route path="/more-info" element={<MoreInfoPage />} />
+          </Routes>
         <Footer
           style={{
             textAlign: 'center',

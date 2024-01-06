@@ -13,5 +13,5 @@ new KarmaCartUiStack(app, 'KarmaCartUiStack', {
   },
   stackName: 'KarmaCartUiStack',
   sourcePath: 'build',
-  domainName: 'karma-cart.com',
+  domainName: 'karma-cart.andersbuck.dev',
 });

@@ -11,8 +11,8 @@ const BarcodeScanner = () => {
     console.log(`Code matched = ${decodedText}`, decodedResult);
     // To stop scanning after first scan.
     scannerRef.current.clear();
-    // Navigate to the item page
-    navigate('/item', { state: { barcode: decodedResult } });
+    // Navigate to the company page
+    navigate('/company', { state: { barcode: decodedResult } });
   };
 
   const onScanFailure = (error) => {

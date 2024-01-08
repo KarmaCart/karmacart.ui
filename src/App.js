@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import {
-  InfoCircleOutlined,
+  MenuOutlined,
   HomeOutlined,
   ScanOutlined,
-  MenuOutlined
+  DownloadOutlined,
+  InfoCircleOutlined
 } from '@ant-design/icons';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import ScanPage from './pages/ScanPage';
-import MoreInfoPage from './pages/MoreInfoPage';
 import CompanyPage from './pages/CompanyPage';
+import ScanExamplesPage from './pages/ScanExamplesPage';
+import MoreInfoPage from './pages/MoreInfoPage';
 import HomePage from './pages/HomePage';
 const { Header, Footer } = Layout;
 
@@ -30,11 +32,13 @@ const App = () => {
 
   const HOME_PAGE = 'HOME_PAGE';
   const SCAN_PAGE = 'SCAN_PAGE';
+  const SCAN_EXAMPLES_PAGE = 'SCAN_EXAMPLES_PAGE';
   const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
   
   const items = [
     getItem('Home', HOME_PAGE, <HomeOutlined />),
     getItem('Scan', SCAN_PAGE, <ScanOutlined />),
+    getItem('Scan Examples', SCAN_EXAMPLES_PAGE, <DownloadOutlined />),
     getItem('More Info', MORE_INFO_PAGE, <InfoCircleOutlined />),
   ];
 
@@ -44,6 +48,8 @@ const App = () => {
       navigate('/');
     } else if (SCAN_PAGE === e.key) {
       navigate('/scan');
+    } else if (SCAN_EXAMPLES_PAGE === e.key) {
+      navigate('/scan-examples');
     } else if (MORE_INFO_PAGE === e.key) {
       navigate('/more-info');
     }
@@ -91,13 +97,14 @@ const App = () => {
             </Button>
           </div>
         </Header>
-        <Drawer title="Menu" width="200px" placement="right" onClick={onClose} onClose={onClose} open={visible}>
+        <Drawer title="Menu" width="220px" placement="right" onClick={onClose} onClose={onClose} open={visible}>
           <Menu defaultSelectedKeys={['1']} mode="inline" items={items} onClick={handleMenuClick} />
         </Drawer>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/scan" element={<ScanPage />} />
             <Route path="/company" element={<CompanyPage />} />
+            <Route path="/scan-examples" element={<ScanExamplesPage />} />
             <Route path="/more-info" element={<MoreInfoPage />} />
           </Routes>
         <Footer

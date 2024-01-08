@@ -41,7 +41,7 @@ const CompanyPage = () => {
       address: '1234 Smallville USA',
       annualRevenue: '$1,000,000',
       website: 'https://www.ethicalconsumer.org/',
-      ethicalScore: '20'
+      ethicalScore: '5'
     }; 
   }
 

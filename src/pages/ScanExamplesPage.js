@@ -32,7 +32,14 @@ const ScanExamplesPage = () => {
       <Row justify="center">
         <Col xs={24} sm={18} md={16} lg={12} xl={10}>
           <div className="section-title"><h2>Scan Examples</h2></div>
-          <div className="subsection">This page offers downloadable example barcodes for use with the Scan page to display preloaded ethical ratings for companies.</div>
+          <div className="subsection">
+            <p>
+              This page offers downloadable example barcodes for use with the Scan page to display preloaded ethical ratings for companies.
+            </p>
+            <p>
+              Ethical ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a> 
+            </p>
+          </div>
           <List
             grid={{ gutter: 16, column: 1 }}
             dataSource={exampleFiles}

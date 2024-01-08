@@ -9,7 +9,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import ScanPage from './pages/ScanPage';
 import MoreInfoPage from './pages/MoreInfoPage';
-import ItemPage from './pages/ItemPage';
+import CompanyPage from './pages/CompanyPage';
 import HomePage from './pages/HomePage';
 const { Header, Footer } = Layout;
 
@@ -97,7 +97,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/scan" element={<ScanPage />} />
-            <Route path="/item" element={<ItemPage />} />
+            <Route path="/company" element={<CompanyPage />} />
             <Route path="/more-info" element={<MoreInfoPage />} />
           </Routes>
         <Footer

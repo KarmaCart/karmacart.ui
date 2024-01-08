@@ -23,7 +23,7 @@ const BarcodeScanner = () => {
     if (!scannerRef.current) {
       const html5QrcodeScanner = new Html5QrcodeScanner(
         "qr-reader",
-        { fps: 10, qrbox: 200 },
+        { fps: 10, qrbox: 200, facingMode: { exact: "environment"} },
         /* verbose= */ false
       );
       html5QrcodeScanner.render(onScanSuccess, onScanFailure);

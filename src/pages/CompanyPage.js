@@ -49,6 +49,9 @@ const CompanyPage = () => {
 
   console.log(`Rendering ItemPage with barcode: ${JSON.stringify(location.state.barcode)}`);
 
+   // Determine badge color based on value
+  const badgeColor = company.ethicalScore >= 15 ? 'green' : 'red';
+
   useEffect(() => {
     if (shouldOpenModal) {
       setIsModalOpen(true);
@@ -79,7 +82,7 @@ const CompanyPage = () => {
               <h2>{company.name}</h2>
             </div>
             <Tooltip style={{verticalAlign: 'top'}} title="Score (out of 20)">
-              <span><div className="score-badge">{company.ethicalScore}</div></span>
+              <span><div className="score-badge" style={{borderColor: badgeColor}}>{company.ethicalScore}</div></span>
             </Tooltip>
           </div>
           <div className="subsection">

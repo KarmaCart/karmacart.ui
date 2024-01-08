@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import {
   InfoCircleOutlined,
-  UserOutlined,
+  HomeOutlined,
   ScanOutlined,
   MenuOutlined
 } from '@ant-design/icons';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
 import ScanPage from './pages/ScanPage';
-import LoginPage from './pages/LoginPage';
 import MoreInfoPage from './pages/MoreInfoPage';
 import ItemPage from './pages/ItemPage';
+import HomePage from './pages/HomePage';
 const { Header, Footer } = Layout;
 
 const App = () => {
@@ -28,19 +28,19 @@ const App = () => {
     };
   }
 
-  const LOGIN_PAGE = 'LOGIN_PAGE';
+  const HOME_PAGE = 'HOME_PAGE';
   const SCAN_PAGE = 'SCAN_PAGE';
   const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
   
   const items = [
-    getItem('Account', LOGIN_PAGE, <UserOutlined />),
+    getItem('Home', HOME_PAGE, <HomeOutlined />),
     getItem('Scan', SCAN_PAGE, <ScanOutlined />),
     getItem('More Info', MORE_INFO_PAGE, <InfoCircleOutlined />),
   ];
 
   const handleMenuClick = (e) => {
     console.log('Menu item clicked:', e.key);
-    if (LOGIN_PAGE === e.key) {
+    if (HOME_PAGE === e.key) {
       navigate('/');
     } else if (SCAN_PAGE === e.key) {
       navigate('/scan');
@@ -58,7 +58,7 @@ const App = () => {
   };
 
   return (
-        <ConfigProvider
+      <ConfigProvider
         theme={{
           token: {
             // Seed Token
@@ -82,7 +82,7 @@ const App = () => {
         }}
         >
           {/* Placeholder to keep the title centered */}
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}><img src='/karmacart-logo.png' alt="logo" width={40} height={40} /></div>
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}><img src='/karmacart-logo.png' alt="logo" width={45} height={45} /></div>
           <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: '20px' }}>KarmaCart</div>
           {/* Hamburger Button */}
           <div style={{ flex: 1, textAlign: 'right' }}>
@@ -95,7 +95,7 @@ const App = () => {
           <Menu defaultSelectedKeys={['1']} mode="inline" items={items} onClick={handleMenuClick} />
         </Drawer>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/scan" element={<ScanPage />} />
             <Route path="/item" element={<ItemPage />} />
             <Route path="/more-info" element={<MoreInfoPage />} />

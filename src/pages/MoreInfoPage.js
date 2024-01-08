@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, theme, Row, Col, Button } from 'antd';
-import { GithubOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
 import './MoreInfoPage.css'; 
 
 const { Content } = Layout;
@@ -21,6 +21,12 @@ const MoreInfoPage = () => {
       icon: <LinkedinOutlined />,
       url: 'https://www.linkedin.com/in/andersbuck',
     },
+    {
+      type: 'Email',
+      icon: <MailOutlined />,
+      url: 'mailto:andersbuck.dev@gmail.com',
+    },
+    
   ];
 
   return(

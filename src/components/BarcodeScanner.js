@@ -22,8 +22,8 @@ const BarcodeScanner = () => {
   useEffect(() => {
     if (!scannerRef.current) {
       const html5QrcodeScanner = new Html5QrcodeScanner(
-        "qr-reader",
-        { fps: 10, qrbox: 200, facingMode: { exact: "environment"} },
+        "reader",
+        { fps: 10, qrbox: 200 },
         /* verbose= */ false
       );
       html5QrcodeScanner.render(onScanSuccess, onScanFailure);
@@ -36,7 +36,7 @@ const BarcodeScanner = () => {
     };
   }, []);
 
-  return <div id="qr-reader"/>;
+  return <div id="reader"/>;
 };
 
 export default BarcodeScanner;

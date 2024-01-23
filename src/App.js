@@ -13,7 +13,21 @@ import CompanyPage from './pages/CompanyPage';
 import ScanExamplesPage from './pages/ScanExamplesPage';
 import MoreInfoPage from './pages/MoreInfoPage';
 import HomePage from './pages/HomePage';
+import SignUpPage from './pages/account/SignUpPage';
+import LoginPage from './pages/account/LoginPage';
+import VerificationPage from './pages/account/VerificationPage';
+import { Amplify } from 'aws-amplify';
 const { Header, Footer } = Layout;
+
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: '', // Amazon Cognito User Pool ID
+      userPoolClientId: '', // Amazon Cognito Web Client ID
+      signUpVerificationMethod: 'code',
+    }
+  }
+});
 
 const App = () => {
 
@@ -102,6 +116,9 @@ const App = () => {
         </Drawer>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/verify" element={<VerificationPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/scan" element={<ScanPage />} />
             <Route path="/company" element={<CompanyPage />} />
             <Route path="/scan-examples" element={<ScanExamplesPage />} />

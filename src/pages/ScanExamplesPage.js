@@ -1,6 +1,6 @@
-import React from 'react';
-import { Layout, theme, Row, Col, List, Button, Card } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd';
+import { FileImageOutlined } from '@ant-design/icons';
 import './ScanExamplesPage.css'
 
 const { Content } = Layout;
@@ -9,14 +9,25 @@ const ScanExamplesPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [shownExample, setShownExample] = useState('');
 
   const exampleFiles = [
     {
       name: 'Method All-Purpose Cleaner',
       description: "Example of 'Method All-Purpose Cleaner' barcode:",
-      downloadLink: '/method-barcode.png',
+      imagePath: '/method-barcode.png',
     }
   ];
+
+  const showModal = (exampleItem) => {
+    setShownExample(exampleItem);
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+      setIsModalVisible(false);
+  };
 
   return(
     <Content
@@ -34,35 +45,36 @@ const ScanExamplesPage = () => {
           <div className="section-title"><h2>Scan Examples</h2></div>
           <div className="subsection">
             <p>
-              This page offers downloadable example barcodes for use with the Scan page to display preloaded ethical ratings for companies.
+              This page offers downloadable example barcodes for use with the Scan page to display preloaded ethical ratings for companies. (Ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a>)
             </p>
             <p>
-              Ethical ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a> 
+               To use an example, visit this site on a second device then select an example below.
             </p>
           </div>
           <List
             grid={{ gutter: 16, column: 1 }}
             dataSource={exampleFiles}
-            renderItem={item => (
+            renderItem={exampleItem => (
               <List.Item>
                 <Card>
-                  {/* Flex container for content and button */}
-                  <div className="card-content">
-                    <div className="text-content">
-                      {item.name}&nbsp;
-                    </div>
-                    <a href={item.downloadLink} download target="_blank" rel="noopener noreferrer">
-                      <Button type="primary" icon={<DownloadOutlined />}>
-                        Download
-                      </Button>
-                    </a>
-                    </div>
+                  <Button type="primary" icon={<FileImageOutlined />} onClick={() => showModal(exampleItem)} style={{ width: '100%' }}>
+                    {exampleItem.name}
+                  </Button>
                 </Card>
               </List.Item>
             )}
           />
         </Col>
       </Row>
+
+      <Modal 
+        title={shownExample.name} 
+        open={isModalVisible} 
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <img src={shownExample.imagePath} alt="Example Preview" style={{ width: '100%' }} />
+      </Modal>
     </Content>
   );
 };

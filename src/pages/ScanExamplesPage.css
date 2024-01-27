@@ -28,13 +28,3 @@
   flex-grow: 1;
   font-weight: bold;
 }
-
-.card-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.text-content {
-  text-align: left;
-}

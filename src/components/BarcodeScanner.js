@@ -5,7 +5,7 @@ const BarcodeScanner = ({
   onResult = () => {},
   onError = () => {},
 }) => {
-  const previewRef = useRef(null);
+  const readerRef = useRef(null);
   const memoizedResultHandler = useRef(onResult);
   const memoizedErrorHandler = useRef(onError);
 
@@ -18,10 +18,10 @@ const BarcodeScanner = ({
   }, [onError]);
 
   useEffect(() => {
-    if (!previewRef.current) return;
+    if (!readerRef.current) return;
 
     // Initialize the Scanner
-    const html5QrcodeScanner = new Html5Qrcode(previewRef.current.id);
+    const html5QrcodeScanner = new Html5Qrcode(readerRef.current.id);
     const didStart = html5QrcodeScanner
       .start(
         { facingMode: 'environment' },
@@ -43,12 +43,12 @@ const BarcodeScanner = ({
           console.log('Error stopping scanner');
         });
     };
-  }, [previewRef, memoizedResultHandler, memoizedErrorHandler]);
+  }, [readerRef, memoizedResultHandler, memoizedErrorHandler]);
 
   return (
     <div
-      id="preview"
-      ref={previewRef}
+      id="reader"
+      ref={readerRef}
     />
   );
 };

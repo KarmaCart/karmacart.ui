@@ -1,42 +1,56 @@
 import React, { useEffect, useRef } from 'react';
-import { Html5QrcodeScanner } from 'html5-qrcode';
-import { useNavigate } from 'react-router-dom';
+import { Html5Qrcode } from 'html5-qrcode';
 
-const BarcodeScanner = () => {
-  const scannerRef = useRef(null);
-  let navigate = useNavigate();
-
-  const onScanSuccess = (decodedText, decodedResult) => {
-    // Handle the scanned code as required.
-    console.log(`Code matched = ${decodedText}`, decodedResult);
-    // To stop scanning after first scan.
-    scannerRef.current.clear();
-    // Navigate to the company page
-    navigate('/company', { state: { barcode: decodedResult } });
-  };
-
-  const onScanFailure = (error) => {
-    // handle scan failure, usually better to ignore and keep scanning.
-  };
+const BarcodeScanner = ({
+  onResult = () => {},
+  onError = () => {},
+}) => {
+  const previewRef = useRef(null);
+  const memoizedResultHandler = useRef(onResult);
+  const memoizedErrorHandler = useRef(onError);
 
   useEffect(() => {
-    if (!scannerRef.current) {
-      const html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader",
+    memoizedResultHandler.current = onResult;
+  }, [onResult]);
+
+  useEffect(() => {
+    memoizedErrorHandler.current = onError;
+  }, [onError]);
+
+  useEffect(() => {
+    if (!previewRef.current) return;
+
+    // Initialize the Scanner
+    const html5QrcodeScanner = new Html5Qrcode(previewRef.current.id);
+    const didStart = html5QrcodeScanner
+      .start(
+        { facingMode: 'environment' },
         { fps: 10, qrbox: 200 },
-        /* verbose= */ false
-      );
-      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        (_, { result }) => {
+          memoizedResultHandler.current(result);
+        },
+        (_, error) => {
+          memoizedErrorHandler.current(error);
+        }
+      )
+      .then(() => true);
 
-      scannerRef.current = html5QrcodeScanner
-    } 
-
-    // Cleanup 
     return () => {
+      // Cleanup the Scanner on unmount
+      didStart
+        .then(() => html5QrcodeScanner.stop())
+        .catch(() => {
+          console.log('Error stopping scanner');
+        });
     };
-  }, []);
+  }, [previewRef, memoizedResultHandler, memoizedErrorHandler]);
 
-  return <div id="reader"/>;
+  return (
+    <div
+      id="preview"
+      ref={previewRef}
+    />
+  );
 };
 
 export default BarcodeScanner;

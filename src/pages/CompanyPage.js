@@ -19,10 +19,10 @@ const CompanyPage = () => {
   };
   
   const location = useLocation();
-  let barcodeText = location.state.barcode.decodedText;
-  barcodeText = barcodeText.padStart(13, '0')
+  let barcodeText = location.state.barcode.text;
+  barcodeText = barcodeText.padStart(13, '0');
 
-  const methodProductLtdPk = '0817939012390'
+  const methodProductLtdPk = '0817939012390';
 
   let company;
   let shouldOpenModal = false;

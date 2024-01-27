@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, theme } from 'antd';
 import BarcodeScanner from '../components/BarcodeScanner';
+import { useNavigate } from 'react-router-dom';
 
 const { Content } = Layout;
 
@@ -8,6 +9,16 @@ const ScanPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  let navigate = useNavigate();
+
+  const handleScanSuccess = (decodedResult) => {
+    // Navigate to the company page
+    navigate('/company', { state: { barcode: decodedResult } });
+  };
+
+  const handleScanFailure = (error) => {
+      // console.log(`Scan failure: ${error}`);
+  };
 
   return(
     <Content
@@ -21,7 +32,10 @@ const ScanPage = () => {
     }}
     >
     <div style={{ textAlign: 'center', fontSize: '20px'}}>Barcode Scanner</div>
-    <BarcodeScanner />
+    <BarcodeScanner
+                onResult={handleScanSuccess}
+                onError={handleScanFailure}
+            />
   </Content>
   );
 };

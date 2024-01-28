@@ -14,7 +14,7 @@ const BarcodeScanner = ({
     const width = window.innerWidth;
     // Set the size of the qrBox based on the screen width
     if (width < 600) {
-        return 220;
+        return 230;
     } else {
         return 300; 
     }

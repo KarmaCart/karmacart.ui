@@ -9,6 +9,17 @@ const BarcodeScanner = ({
   const memoizedResultHandler = useRef(onResult);
   const memoizedErrorHandler = useRef(onError);
 
+  // Function to determine the qrBox size
+  const getQrBoxSize = () => {
+    const width = window.innerWidth;
+    // Set the size of the qrBox based on the screen width
+    if (width < 600) {
+        return 200;
+    } else {
+        return 300; 
+    }
+  };
+
   useEffect(() => {
     memoizedResultHandler.current = onResult;
   }, [onResult]);
@@ -25,7 +36,7 @@ const BarcodeScanner = ({
     const didStart = html5QrcodeScanner
       .start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: 200 },
+        { fps: 10, qrbox: getQrBoxSize() },
         (_, { result }) => {
           memoizedResultHandler.current(result);
         },
@@ -49,6 +60,7 @@ const BarcodeScanner = ({
     <div
       id="reader"
       ref={readerRef}
+      style={{ maxWidth: '500px', margin: '0 auto' }}
     />
   );
 };

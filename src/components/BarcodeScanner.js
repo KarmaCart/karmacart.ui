@@ -46,16 +46,13 @@ const BarcodeScanner = ({
       );
 
     return () => {
-      // Cleanup the Scanner on unmount
-      didStart
-        .then(() => { 
-          if(html5QrcodeScanner.isScanning) { 
-            return html5QrcodeScanner.stop()
-          }
-        })
-        .catch(() => {
-          console.error('Error stopping scanner');
-        });
+      // Cleanup the Scanner on unmount, have to wait with a Timeout here since
+      // Html5Qrcode starts a video.play() but does not include it in the Promise chain of start()
+      didStart.then(() => setTimeout(() => {
+        if (html5QrcodeScanner.isScanning) { 
+          html5QrcodeScanner.stop();
+        }
+      }, 100));
     };
   }, [readerRef, memoizedResultHandler, memoizedErrorHandler]);
 

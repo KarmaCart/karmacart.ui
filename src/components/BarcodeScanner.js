@@ -43,15 +43,18 @@ const BarcodeScanner = ({
         (_, error) => {
           memoizedErrorHandler.current(error);
         }
-      )
-      .then(() => true);
+      );
 
     return () => {
       // Cleanup the Scanner on unmount
       didStart
-        .then(() => html5QrcodeScanner.stop())
+        .then(() => { 
+          if(html5QrcodeScanner.isScanning) { 
+            return html5QrcodeScanner.stop()
+          }
+        })
         .catch(() => {
-          console.log('Error stopping scanner');
+          console.error('Error stopping scanner');
         });
     };
   }, [readerRef, memoizedResultHandler, memoizedErrorHandler]);

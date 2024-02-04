@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, theme } from 'antd';
 import BarcodeScanner from '../components/BarcodeScanner';
 import { useNavigate } from 'react-router-dom';
+import { SCAN_PAGE } from '../App';
 
 const { Content } = Layout;
 
-const ScanPage = () => {
+const ScanPage = ({setSelectedMenuKey}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   let navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectedMenuKey(SCAN_PAGE);
+  }, [setSelectedMenuKey]);
 
   const handleScanSuccess = (decodedResult) => {
     // Navigate to the company page

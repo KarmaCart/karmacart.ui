@@ -15,9 +15,15 @@ import MoreInfoPage from './pages/MoreInfoPage';
 import HomePage from './pages/HomePage';
 const { Header, Footer } = Layout;
 
+export const HOME_PAGE = 'HOME_PAGE';
+export const SCAN_PAGE = 'SCAN_PAGE';
+export const SCAN_EXAMPLES_PAGE = 'SCAN_EXAMPLES_PAGE';
+export const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
+
 const App = () => {
 
   const [visible, setVisible] = useState(false);
+  const [menuKey, setSelectedMenuKey] = useState(HOME_PAGE);
 
   let navigate = useNavigate();
 
@@ -29,11 +35,6 @@ const App = () => {
       label,
     };
   }
-
-  const HOME_PAGE = 'HOME_PAGE';
-  const SCAN_PAGE = 'SCAN_PAGE';
-  const SCAN_EXAMPLES_PAGE = 'SCAN_EXAMPLES_PAGE';
-  const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
   
   const items = [
     getItem('Home', HOME_PAGE, <HomeOutlined />),
@@ -98,14 +99,14 @@ const App = () => {
           </div>
         </Header>
         <Drawer title="Menu" width="220px" placement="right" onClick={onClose} onClose={onClose} open={visible}>
-          <Menu defaultSelectedKeys={['1']} mode="inline" items={items} onClick={handleMenuClick} />
+          <Menu defaultSelectedKeys={['HOME_PAGE']} selectedKeys={[menuKey]} mode="inline" items={items} onClick={handleMenuClick} />
         </Drawer>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/scan" element={<ScanPage />} />
+            <Route path="/" element={<HomePage setSelectedMenuKey={setSelectedMenuKey}/>} />
+            <Route path="/scan" element={<ScanPage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/company" element={<CompanyPage />} />
-            <Route path="/scan-examples" element={<ScanExamplesPage />} />
-            <Route path="/more-info" element={<MoreInfoPage />} />
+            <Route path="/scan-examples" element={<ScanExamplesPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+            <Route path="/more-info" element={<MoreInfoPage setSelectedMenuKey={setSelectedMenuKey}/>} />
           </Routes>
         <Footer
           style={{

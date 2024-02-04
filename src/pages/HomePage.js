@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, theme, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { HOME_PAGE } from '../App';
 
 const { Content } = Layout;
 
@@ -15,12 +16,16 @@ const titleStyle = {
   margin: '0 auto', // Center the title block in the parent element
 };
 
-const HomePage = () => {
+const HomePage = ({setSelectedMenuKey}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    setSelectedMenuKey(HOME_PAGE);
+  }, [setSelectedMenuKey]);
 
   return(
   <Content
@@ -39,7 +44,7 @@ const HomePage = () => {
     <p style={{fontSize: '15px', margin: '0', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto'}}>
       KarmaCart aims to be a comprehensive tool for consumers to navigate the ethical and sustainability of products, empowering them to make informed and impactful choices.
     </p>
-    <Button type="primary" size="large" style={{margin: '10px'}} onClick={() => {navigate('/scan')}}>Scan First Item</Button>
+    <Button type="primary" size="large" style={{margin: '10px'}} onClick={() => {navigate('/scan');}}>Scan First Item</Button>
   </Content>
   );
 };

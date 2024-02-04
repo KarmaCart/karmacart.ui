@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd';
 import { FileImageOutlined } from '@ant-design/icons';
+import { SCAN_EXAMPLES_PAGE } from '../App';
 import './ScanExamplesPage.css'
 
 const { Content } = Layout;
 
-const ScanExamplesPage = () => {
+const ScanExamplesPage = ({setSelectedMenuKey}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [shownExample, setShownExample] = useState('');
+
+  useEffect(() => {
+    setSelectedMenuKey(SCAN_EXAMPLES_PAGE);
+  }, [setSelectedMenuKey]);
 
   const exampleFiles = [
     {

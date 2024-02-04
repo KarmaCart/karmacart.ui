@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, theme, Row, Col, Button } from 'antd';
 import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
+import { MORE_INFO_PAGE } from '../App';
 import './MoreInfoPage.css'; 
 
 const { Content } = Layout;
 
-const MoreInfoPage = () => {
+const MoreInfoPage = ({setSelectedMenuKey}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    setSelectedMenuKey(MORE_INFO_PAGE);
+  }, [setSelectedMenuKey]);
 
   const socialLinks = [
     {

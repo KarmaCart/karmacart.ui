@@ -23,7 +23,7 @@ export const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
 const App = () => {
 
   const [visible, setVisible] = useState(false);
-  const [menuKey, setSelectedMenuKey] = useState(HOME_PAGE);
+  const [menuKey, setSelectedMenuKey] = useState(null);
 
   let navigate = useNavigate();
 
@@ -99,12 +99,12 @@ const App = () => {
           </div>
         </Header>
         <Drawer title="Menu" width="220px" placement="right" onClick={onClose} onClose={onClose} open={visible}>
-          <Menu defaultSelectedKeys={['HOME_PAGE']} selectedKeys={[menuKey]} mode="inline" items={items} onClick={handleMenuClick} />
+          <Menu selectedKeys={[menuKey]} mode="inline" items={items} onClick={handleMenuClick} />
         </Drawer>
           <Routes>
             <Route path="/" element={<HomePage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/scan" element={<ScanPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/company" element={<CompanyPage />} />
+            <Route path="/company" element={<CompanyPage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/scan-examples" element={<ScanExamplesPage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/more-info" element={<MoreInfoPage setSelectedMenuKey={setSelectedMenuKey}/>} />
           </Routes>

@@ -7,10 +7,14 @@ import axios from 'axios';
 const { Content } = Layout;
 const { Panel } = Collapse;
 
-const CompanyPage = () => {
+const CompanyPage = ({setSelectedMenuKey}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    setSelectedMenuKey(null);
+  }, [setSelectedMenuKey]);
 
   
   const [isModalOpen, setIsModalOpen] = useState(false);

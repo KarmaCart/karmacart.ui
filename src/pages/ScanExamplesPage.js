@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd';
-import { FileImageOutlined } from '@ant-design/icons';
+import { PictureOutlined } from '@ant-design/icons';
 import { SCAN_EXAMPLES_PAGE } from '../App';
 import './ScanExamplesPage.css'
 
@@ -19,9 +19,24 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
 
   const exampleFiles = [
     {
+      name: 'Astonish Kitchen Cleaner',
+      description: "Example of 'Astonish Kitchen Cleaner' barcode:",
+      imagePath: '/astonish-barcode.png',
+    },
+    {
       name: 'Method All-Purpose Cleaner',
       description: "Example of 'Method All-Purpose Cleaner' barcode:",
       imagePath: '/method-barcode.png',
+    },
+    {
+      name: 'Cawston Press Soft Drink',
+      description: "Example of 'Cawston Press Soft Drink' barcode:",
+      imagePath: '/cawston-barcode.png',
+    },
+    {
+      name: 'Coca Cola',
+      description: "Example of 'Coca Cola' barcode:",
+      imagePath: '/coca-cola-barcode.png',
     }
   ];
 
@@ -50,7 +65,8 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
           <div className="section-title"><h2>Scan Examples</h2></div>
           <div className="subsection">
             <p>
-              This page offers downloadable example barcodes for use with the Scan page to display preloaded ethical ratings for companies. (Ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a>)
+              This page offers example barcodes for use with the Scan page. 
+              (Ethical ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a>)
             </p>
             <p>
                To use an example, visit this site on a second device then select an example below.
@@ -61,11 +77,9 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
             dataSource={exampleFiles}
             renderItem={exampleItem => (
               <List.Item>
-                <Card>
-                  <Button type="primary" icon={<FileImageOutlined />} onClick={() => showModal(exampleItem)} style={{ width: '100%' }}>
-                    {exampleItem.name}
-                  </Button>
-                </Card>
+                <Button type="primary" icon={<PictureOutlined />} onClick={() => showModal(exampleItem)} style={{ width: '100%' }}>
+                  {exampleItem.name}
+                </Button>
               </List.Item>
             )}
           />

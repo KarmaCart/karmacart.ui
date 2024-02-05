@@ -3,6 +3,7 @@ import { Row, Col, Collapse, Layout, theme, Tooltip, Modal } from 'antd';
 import { useLocation } from 'react-router-dom';
 import './CompanyPage.css';
 import axios from 'axios';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Panel } = Collapse;
@@ -69,7 +70,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
   return(
   <>
-    {loading && <div>Loading...</div>}
+    {loading && <div><LoadingOutlined /></div>}
     {error && <div>Error: {error.message}</div>}
     {data && <><Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
       <p>Unfortunately, your barcode was not found in our system. You can still view this example company page.</p>

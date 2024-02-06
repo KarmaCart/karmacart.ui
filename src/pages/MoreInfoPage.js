@@ -45,7 +45,7 @@ const MoreInfoPage = ({setSelectedMenuKey}) => {
       textAlign: 'center'
     }}
   >
-    <p>This demo application was created by Anderson Buckles</p>
+    <p>This demo application was created by Anderson&nbsp;Buckles</p>
     <p>Find out more about this demo <a href='https://github.com/KarmaCart'>on GitHub</a></p>
     <div className="social-section">
       <Row justify="center">

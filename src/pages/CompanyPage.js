@@ -3,7 +3,6 @@ import { Row, Col, Collapse, Layout, theme, Tooltip, Modal, Spin, Alert } from '
 import { useLocation } from 'react-router-dom';
 import './CompanyPage.css';
 import axios from 'axios';
-import { LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Panel } = Collapse;
@@ -40,7 +39,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   const [error, setError] = useState(null);
   
   // Determine badge color based on value
-   const badgeColor = 'red' //data.ethicalScore >= 15 ? 'green' : 'red';
+  const badgeColor = 'red' //data.ethicalScore >= 15 ? 'green' : 'red';
 
   useEffect(() => {
 
@@ -60,13 +59,13 @@ const CompanyPage = ({setSelectedMenuKey}) => {
             setError(error);
             setLoading(false);
         });
-  }, []);
+  }, [barcodeText]);
 
   useEffect(() => {
     if (shouldOpenModal) {
       setIsModalOpen(true);
     }
-  }, []);
+  }, [shouldOpenModal]);
 
   return(
   <>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { List, Button, Spin, Alert } from 'antd';
 import axios from 'axios';
-import { LoadingOutlined } from '@ant-design/icons';
 import { COMPANIES_PAGE } from '../App';
 
 const CompaniesPage = ({setSelectedMenuKey}) => {

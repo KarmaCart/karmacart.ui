@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Collapse, Layout, theme, Tooltip, Modal, Spin, Alert } from 'antd';
+import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert } from 'antd';
 import { useLocation } from 'react-router-dom';
+import EthicalScore from '../components/EthicalScore'
 import './CompanyPage.css';
 import axios from 'axios';
 
@@ -37,9 +38,6 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  // Determine badge color based on value
-  const badgeColor = 'red' //data.ethicalScore >= 15 ? 'green' : 'red';
 
   useEffect(() => {
 
@@ -68,33 +66,32 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   }, [shouldOpenModal]);
 
   return(
-  <>
-    {loading && <div style={{ paddingTop: '40vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
-    {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {data && <><Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
-      <p>Unfortunately, your barcode was not found in our system. You can still view this example company page.</p>
-      <p>Check out the 'Scan Examples' page, for barcode examples.</p>
-    </Modal>
     <Content
-      style={{
-        margin: '24px 16px',
-        padding: 24,
-        minHeight: 280,
-        background: colorBgContainer,
-        borderRadius: borderRadiusLG
-      }}
+    style={{
+      margin: '24px 16px',
+      padding: 24,
+      minHeight: 280,
+      background: colorBgContainer,
+      borderRadius: borderRadiusLG
+    }}
     >
+    {loading && <div style={{ paddingTop: '30vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
+    {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
+    {data && 
+    <>
+      <Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
+        <p>Unfortunately, your barcode was not found in our system. You can still view this example company page.</p>
+        <p>Check out the 'Scan Examples' page, for barcode examples.</p>
+      </Modal>
+
       {/* Section 1 */}
       <Row justify="center">
-        {/* Subsection 1 & 2 for laptops, they stack on mobile */}
         <Col xs={24} sm={24} lg={12}>
           <div className="section-title">
             <div className="section-content">
               <h2>{data.companyName}</h2>
             </div>
-            <Tooltip style={{verticalAlign: 'top'}} title="Score (out of 20)">
-              <span><div className="score-badge" style={{borderColor: badgeColor}}>{data.ethicalScore}</div></span>
-            </Tooltip>
+            <EthicalScore score={data.ethicalScore} />
           </div>
           <div className="subsection">
             <h2>Company information</h2>
@@ -142,8 +139,8 @@ const CompanyPage = ({setSelectedMenuKey}) => {
           </Collapse>
         </Col>
       </Row>
-    </Content></>}
-  </>
+    </>}
+    </Content>
   );
 };
 

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { List, Button, Spin, Alert } from 'antd';
+import { List, Button, Spin, Alert, theme, Layout } from 'antd';
 import axios from 'axios';
 import { COMPANIES_PAGE } from '../App';
 
+const { Content } = Layout;
+
 const CompaniesPage = ({setSelectedMenuKey}) => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -41,8 +47,16 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
   };
 
   return (
-    <>
-    {loading && <div style={{ paddingTop: '40vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
+    <Content
+    style={{
+      margin: '24px 16px',
+      padding: 24,
+      minHeight: 280,
+      background: colorBgContainer,
+      borderRadius: borderRadiusLG
+    }}
+    >
+    {loading && <div style={{ paddingTop: '30vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
     {data && <div style={{ padding: '20px', maxWidth: '400px', alignContent: 'center' }}>
       <List
@@ -61,7 +75,7 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
         )}
       />
     </div>}
-    </>
+    </Content>
   );
 };
 

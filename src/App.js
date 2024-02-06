@@ -118,6 +118,8 @@ const App = () => {
         <Footer
           style={{
             textAlign: 'center',
+            position: 'absolute',
+            bottom: '0'
           }}
         >
         KarmaCart created by Anderson Buckles

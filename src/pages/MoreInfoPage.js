@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Layout, theme, Row, Col, Button } from 'antd';
+import { Layout, theme, Row, Col, Button, Tag } from 'antd';
 import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
 import { MORE_INFO_PAGE } from '../App';
 import './MoreInfoPage.css'; 
@@ -20,16 +20,19 @@ const MoreInfoPage = ({setSelectedMenuKey}) => {
       type: 'GitHub',
       icon: <GithubOutlined />,
       url: 'https://github.com/andersbuck',
+      color: '#333'
     },
     {
       type: 'LinkedIn',
       icon: <LinkedinOutlined />,
       url: 'https://www.linkedin.com/in/andersbuck',
+      color: '#0077B5'
     },
     {
       type: 'Email',
       icon: <MailOutlined />,
       url: 'mailto:andersbuck.dev@gmail.com',
+      color: '#c71610'
     },
     
   ];
@@ -51,9 +54,11 @@ const MoreInfoPage = ({setSelectedMenuKey}) => {
       <Row justify="center">
         {socialLinks.map(link => (
           <Col key={link.type}>
-            <Button type="link" href={link.url} target="_blank" icon={link.icon}>
-              {link.type}
-            </Button>
+            <a href={link.url}>
+              <Tag icon={link.icon} color={link.color}>
+                {link.type}
+              </Tag>
+            </a>
           </Col>
         ))}
       </Row>

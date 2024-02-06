@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { List, Button } from 'antd';
+import { List, Button, Spin, Alert } from 'antd';
 import axios from 'axios';
 import { LoadingOutlined } from '@ant-design/icons';
 import { COMPANIES_PAGE } from '../App';
@@ -43,9 +43,9 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
 
   return (
     <>
-    {loading && <div><LoadingOutlined /></div>}
-    {error && <div>Error: {error.message}</div>}
-    {data && <div style={{ padding: '20px', maxHeight: '90vh', overflowY: 'auto', maxWidth: '400px', alignContent: 'center' }}>
+    {loading && <div style={{ paddingTop: '40vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
+    {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
+    {data && <div style={{ padding: '20px', maxWidth: '400px', alignContent: 'center' }}>
       <List
         header={<h2>Companies</h2>}
         bordered

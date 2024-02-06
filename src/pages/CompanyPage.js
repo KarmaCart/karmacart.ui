@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Collapse, Layout, theme, Tooltip, Modal } from 'antd';
+import { Row, Col, Collapse, Layout, theme, Tooltip, Modal, Spin, Alert } from 'antd';
 import { useLocation } from 'react-router-dom';
 import './CompanyPage.css';
 import axios from 'axios';
@@ -70,8 +70,8 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
   return(
   <>
-    {loading && <div><LoadingOutlined /></div>}
-    {error && <div>Error: {error.message}</div>}
+    {loading && <div style={{ paddingTop: '40vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
+    {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
     {data && <><Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
       <p>Unfortunately, your barcode was not found in our system. You can still view this example company page.</p>
       <p>Check out the 'Scan Examples' page, for barcode examples.</p>

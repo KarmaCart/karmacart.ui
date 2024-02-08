@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert, Button } from 'antd';
 import { useLocation } from 'react-router-dom';
 import EthicalScore from '../components/EthicalScore'
-import './CompanyPage.css';
+import '../css/Section.css';
 import axios from 'axios';
 
 const { Content } = Layout;
@@ -17,6 +18,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
     setSelectedMenuKey(null);
   }, [setSelectedMenuKey]);
 
+  let navigate = useNavigate();
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -65,6 +67,13 @@ const CompanyPage = ({setSelectedMenuKey}) => {
     }
   }, [shouldOpenModal]);
 
+  // Function to handle the selection of a company
+  const handleSelectCompany = () => {
+    const item = { pk: 'COMPANY#0000000000002'}
+    // Navigate to the company page
+    navigate('/company', { state: { barcode: { text: item.pk.replace('COMPANY#', '') } } });
+  };
+
   return(
     <Content
     style={{
@@ -86,12 +95,12 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
       {/* Section 1 */}
       <Row justify="center">
-        <Col xs={24} sm={24} lg={12}>
+        <Col xs={24} sm={24} lg={8}>
           <div className="section-title">
             <div className="section-content">
               <h2>{data.companyName}</h2>
             </div>
-            <EthicalScore score={data.ethicalScore} />
+            <EthicalScore score={data.ethicalScore} size='large' showDesc={true} />
           </div>
           <div className="subsection">
             <h2>Company information</h2>
@@ -105,36 +114,33 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
       {/* Section 2 */}
       <Row justify="center">
-        <Col xs={24} sm={24} lg={12}>
-          <div className="section"><h2>Suggested Products</h2></div>
-          <div className="subsection">Suggested Product</div>
+        <Col xs={24} sm={24} lg={8}>
+          <div className="section"><h2>Suggested Companies</h2></div>
+          <div className="subsection">
+            <div style={{display: 'flex', alignItems: 'center'}}>
+            <Button type='link' size='large' onClick={() => handleSelectCompany()} >Example High Score</Button>
+            <EthicalScore score={15} size='small' showDesc={false}/>
+            </div>
+          </div>
         </Col>
       </Row>
 
       {/* Section 3 */}
       <Row justify="center">
-        <Col xs={24} sm={24} lg={12}>
-          <div className="section"><h2>Ownership Structure</h2></div>
-          <div className="subsection">Ownership Structure</div>
-        </Col>
-      </Row>
-
-      {/* Section 4 */}
-      <Row justify="center">
-        <Col xs={24} sm={24} lg={12}>
+        <Col xs={24} sm={24} lg={8}>
           <div className="section"><h2>Ethical Breakdown</h2></div>
           <Collapse>
             <Panel header="Environment" key="1">
-              <p>The environmental breakdown for {data.name}: {temporaryText}</p>
+              <p>The environmental breakdown for {data.companyName}: {temporaryText}</p>
             </Panel>
             <Panel header="People" key="2">
-              <p>The ethics involving people for {data.name}: {temporaryText}</p>
+              <p>The ethics involving people for {data.companyName}: {temporaryText}</p>
             </Panel>
             <Panel header="Animals" key="3">
-              <p>The ethics involving animals for {data.name}: {temporaryText}</p>
+              <p>The ethics involving animals for {data.companyName}: {temporaryText}</p>
             </Panel>
             <Panel header="Politics" key="4">
-              <p>The ethics involving politics for {data.name}: {temporaryText}</p>
+              <p>The ethics involving politics for {data.companyName}: {temporaryText}</p>
             </Panel>
           </Collapse>
         </Col>

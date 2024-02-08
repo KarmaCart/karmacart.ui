@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { List, Button, Spin, Alert, theme, Layout } from 'antd';
+import { Button, Spin, Alert, theme, Layout, Table} from 'antd';
 import axios from 'axios';
 import { COMPANIES_PAGE } from '../App';
+import EthicalScore from '../components/EthicalScore';
 
 const { Content } = Layout;
 
@@ -41,16 +42,72 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
   }, []);
 
   // Function to handle the selection of a company
-  const handleSelectCompany = (item) => {
+  const handleSelectCompany = (record) => {
     // Navigate to the company page
-    navigate('/company', { state: { barcode: { text: item.pk.S.replace('COMPANY#', '') } } });
+    navigate('/company', { state: { barcode: { text: record.pk.replace('COMPANY#', '') } } });
   };
+
+  const formatUsdCurrency = (number) => {
+    const currency = new Intl.NumberFormat('en-US', { 
+      style: 'currency',
+      currency: 'USD'
+    });
+
+    return currency.format(number)
+  }
+
+  const renderMobileTable = (columns) => {
+    return columns.filter(
+      column => column.key === "companyName" || column.key === "ethicalScore"
+    );
+  };
+
+  let columns = [
+    {
+      title: 'Company Name',
+      dataIndex: 'companyName',
+      key: 'companyName',
+      render: (text, record) => <><Button type="link" onClick={() => handleSelectCompany(record)}>{text}</Button></>,
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Annual Revenue',
+      dataIndex: 'annualRevenue',
+      key: 'annualRevenue',
+      render: (_, { annualRevenue }) => {
+        return formatUsdCurrency(annualRevenue);
+      }
+    },
+    {
+      title: 'Ethical Score',
+      key: 'ethicalScore',
+      dataIndex: 'ethicalScore',
+      render: (_, { ethicalScore }) => (
+        <>
+          <EthicalScore score={ethicalScore} size='small' showDesc={false} />
+        </>
+      ),
+    },
+    {
+      title: 'Website',
+      dataIndex: 'website',
+      key: 'website',
+    },
+  ];
+
+  const isMobile = window.innerWidth < 700;
+  if (isMobile) {
+    columns = renderMobileTable(columns);
+  }
 
   return (
     <Content
     style={{
       margin: '24px 16px',
-      padding: 24,
       minHeight: 280,
       background: colorBgContainer,
       borderRadius: borderRadiusLG
@@ -58,22 +115,9 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
     >
     {loading && <div style={{ paddingTop: '30vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {data && <div style={{ padding: '20px', maxWidth: '400px', alignContent: 'center' }}>
-      <List
-        header={<h2>Companies</h2>}
-        bordered
-        dataSource={data}
-        renderItem={item => (
-          <List.Item>
-            <Button 
-              type="text" 
-              onClick={() => handleSelectCompany(item)}
-            >
-              {item.companyName.S}
-            </Button>
-          </List.Item>
-        )}
-      />
+    {data && <div style={{ padding: '20px', textAlign: 'center'}}>
+      <h2>Companies</h2>
+      <Table columns={columns} dataSource={data} />
     </div>}
     </Content>
   );

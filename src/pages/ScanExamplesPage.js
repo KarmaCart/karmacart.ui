@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import { SCAN_EXAMPLES_PAGE } from '../App';
-import './ScanExamplesPage.css'
+import '../css/Section.css'
 
 const { Content } = Layout;
 

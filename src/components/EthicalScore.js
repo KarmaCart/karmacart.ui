@@ -1,8 +1,8 @@
 import React from 'react';
-import { Progress, Tooltip, Statistic } from 'antd';
+import { Tooltip } from 'antd';
 import './EthicalScore.css';
 
-const EthicalScore = ({ score }) => {
+const EthicalScore = ({ score, size, showDesc }) => {
   const getScoreColor = (score) => {
     if (score >= 8) return '#52c41a'; // green for high scores
     if (score >= 6) return '#faad14'; // yellow for medium scores
@@ -15,14 +15,18 @@ const EthicalScore = ({ score }) => {
     return 'Low Ethical Standards';
   };
 
+  const getSizeStyle = (size) => {
+    if (size === 'large') return { width: '50px', height: '50px', fontSize: '24px' };
+    if (size === 'small') return { width: '35px', height: '35px', fontSize: '18px' };
+    return { width: '50px', height: '50px', fontSize: '24px' };
+  }
+
   return (
     <div>
       <Tooltip title={`This company has an ethical score of ${score}, indicating ${getScoreDescription(score)}.`}>
-      <span className='score-container'><div className="score-badge" style={{borderColor: getScoreColor(score)}}>{score}</div></span>
+      <span className='score-container'><div className="score-badge" style={{borderColor: getScoreColor(score), ...getSizeStyle(size)}}>{score}</div></span>
       </Tooltip>
-      <div>
-        Ethical&nbsp;Score
-      </div>
+      { showDesc && <div>Ethical&nbsp;Score</div>}
     </div>
   );
 };

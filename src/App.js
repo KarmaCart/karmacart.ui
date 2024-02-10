@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   MenuOutlined,
   HomeOutlined,
-  ShopOutlined,
+  ShoppingOutlined,
   ScanOutlined,
   DownloadOutlined,
   InfoCircleOutlined
@@ -14,11 +14,11 @@ import CompanyPage from './pages/CompanyPage';
 import ScanExamplesPage from './pages/ScanExamplesPage';
 import MoreInfoPage from './pages/MoreInfoPage';
 import HomePage from './pages/HomePage';
-import CompaniesPage from './pages/CompaniesPage';
+import ProductsPage from './pages/ProductsPage';
 const { Header, Footer } = Layout;
 
 export const HOME_PAGE = 'HOME_PAGE';
-export const COMPANIES_PAGE = 'COMPANIES_PAGE';
+export const PRODUCTS_PAGE = 'COMPANIES_PAGE';
 export const SCAN_PAGE = 'SCAN_PAGE';
 export const SCAN_EXAMPLES_PAGE = 'SCAN_EXAMPLES_PAGE';
 export const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
@@ -41,7 +41,7 @@ const App = () => {
   
   const items = [
     getItem('Home', HOME_PAGE, <HomeOutlined />),
-    getItem('Companies', COMPANIES_PAGE, <ShopOutlined />),
+    getItem('Products', PRODUCTS_PAGE, <ShoppingOutlined />),
     getItem('Scan', SCAN_PAGE, <ScanOutlined />),
     getItem('Scan Examples', SCAN_EXAMPLES_PAGE, <DownloadOutlined />),
     getItem('More Info', MORE_INFO_PAGE, <InfoCircleOutlined />),
@@ -51,8 +51,8 @@ const App = () => {
     console.log('Menu item clicked:', e.key);
     if (HOME_PAGE === e.key) {
       navigate('/');
-    } else if (COMPANIES_PAGE === e.key) {
-      navigate('/companies');
+    } else if (PRODUCTS_PAGE === e.key) {
+      navigate('/products');
     } else if (SCAN_PAGE === e.key) {
       navigate('/scan');
     } else if (SCAN_EXAMPLES_PAGE === e.key) {
@@ -111,7 +111,7 @@ const App = () => {
             <Route path="/" element={<HomePage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/scan" element={<ScanPage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/company" element={<CompanyPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/companies" element={<CompaniesPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+            <Route path="/products" element={<ProductsPage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/scan-examples" element={<ScanExamplesPage setSelectedMenuKey={setSelectedMenuKey}/>} />
             <Route path="/more-info" element={<MoreInfoPage setSelectedMenuKey={setSelectedMenuKey}/>} />
           </Routes>

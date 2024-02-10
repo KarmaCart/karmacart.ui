@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Spin, Alert, theme, Layout, Table} from 'antd';
+import { Button, Spin, Alert, theme, Layout, Table, Tooltip} from 'antd';
 import axios from 'axios';
-import { COMPANIES_PAGE } from '../App';
+import { PRODUCTS_PAGE } from '../App';
 import EthicalScore from '../components/EthicalScore';
 
 const { Content } = Layout;
 
-const CompaniesPage = ({setSelectedMenuKey}) => {
+const ProductsPage = ({setSelectedMenuKey}) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -15,7 +15,7 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    setSelectedMenuKey(COMPANIES_PAGE);
+    setSelectedMenuKey(PRODUCTS_PAGE);
   }, [setSelectedMenuKey]);
 
   const [data, setData] = useState(null);
@@ -47,80 +47,44 @@ const CompaniesPage = ({setSelectedMenuKey}) => {
     navigate('/company', { state: { barcode: { text: record.pk.replace('COMPANY#', '') } } });
   };
 
-  const formatUsdCurrency = (number) => {
-    const currency = new Intl.NumberFormat('en-US', { 
-      style: 'currency',
-      currency: 'USD'
-    });
-
-    return currency.format(number)
-  }
-
-  const renderMobileTable = (columns) => {
-    return columns.filter(
-      column => column.key === "companyName" || column.key === "ethicalScore"
-    );
-  };
-
   let columns = [
     {
-      title: 'Company Name',
+      title: 'Product',
       dataIndex: 'companyName',
       key: 'companyName',
-      render: (text, record) => <><Button type="link" onClick={() => handleSelectCompany(record)}>{text}</Button></>,
+      render: (text, record) => <><Button type="link" size={'large'} onClick={() => handleSelectCompany(record)} style={{padding: 0}}>{text}</Button></>,
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Annual Revenue',
-      dataIndex: 'annualRevenue',
-      key: 'annualRevenue',
-      render: (_, { annualRevenue }) => {
-        return formatUsdCurrency(annualRevenue);
-      }
-    },
-    {
-      title: 'Ethical Score',
+      title: <Tooltip title='Score out of 20'><span>Ethical Score</span></Tooltip>,
       key: 'ethicalScore',
       dataIndex: 'ethicalScore',
+      align: 'center',
       render: (_, { ethicalScore }) => (
         <>
           <EthicalScore score={ethicalScore} size='small' showDesc={false} />
         </>
       ),
-    },
-    {
-      title: 'Website',
-      dataIndex: 'website',
-      key: 'website',
-    },
+    }
   ];
-
-  const isMobile = window.innerWidth < 700;
-  if (isMobile) {
-    columns = renderMobileTable(columns);
-  }
 
   return (
     <Content
     style={{
       margin: '24px 16px',
-      minHeight: 280,
       background: colorBgContainer,
-      borderRadius: borderRadiusLG
+      borderRadius: borderRadiusLG,
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center',
     }}
     >
-    {loading && <div style={{ paddingTop: '30vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
+    {loading && <Spin size="large"></Spin>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {data && <div style={{ padding: '20px', textAlign: 'center'}}>
-      <h2>Companies</h2>
+    {data && <div style={{ padding: '20px' }}>
       <Table columns={columns} dataSource={data} />
     </div>}
     </Content>
   );
 };
 
-export default CompaniesPage;
+export default ProductsPage;

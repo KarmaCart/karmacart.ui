@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert, Button } from 'antd';
+import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert, Button, Card } from 'antd';
 import { useLocation } from 'react-router-dom';
 import EthicalScore from '../components/EthicalScore'
 import '../css/Section.css';
 import axios from 'axios';
+import styled from 'styled-components';
 
 const { Content } = Layout;
 const { Panel } = Collapse;
+
+const StyledCard = styled(Card)`
+.ant-card-head {
+  padding: 2px 10px;
+  border-bottom: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+`;
 
 const CompanyPage = ({setSelectedMenuKey}) => {
   const {
@@ -32,14 +42,20 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
   let shouldOpenModal = false;
 
-  const temporaryText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
   console.log(`Rendering ItemPage with barcode: ${JSON.stringify(location.state.barcode)}`);
 
-  
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [companyData, setCompanyData] = useState(null);
+  const [companyDataLoading, setCompanyDataLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const formatUsdCurrency = (number) => {
+    const currency = new Intl.NumberFormat('en-US', { 
+      style: 'currency',
+      currency: 'USD'
+    });
+
+    return currency.format(number)
+  }
 
   useEffect(() => {
 
@@ -51,15 +67,18 @@ const CompanyPage = ({setSelectedMenuKey}) => {
             throw new Error('Network response was not ok.');
         })
         .then(data => {
-            setData(data);
-            setLoading(false);
+            setCompanyData(data);
+            setCompanyDataLoading(false);
         })
         .catch(error => {
             console.error('There was a problem with the get company operation:', error);
             setError(error);
-            setLoading(false);
+            setCompanyDataLoading(false);
         });
   }, [barcodeText]);
+
+  // Mock Product Info
+  const productInfo = { name: "Product X", description: "Description of Product X" };
 
   useEffect(() => {
     if (shouldOpenModal) {
@@ -69,83 +88,87 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
   // Function to handle the selection of a company
   const handleSelectCompany = () => {
-    const item = { pk: 'COMPANY#0000000000002'}
+    const item = { pk: 'COMPANY#0048256296181'}
     // Navigate to the company page
     navigate('/company', { state: { barcode: { text: item.pk.replace('COMPANY#', '') } } });
   };
+
+  const cardBoardered = false;
+  const cardBodyStyle = {padding: "2px 10px"};
+  const cardStyle = {backgroundColor: '#ebfaeb'};
 
   return(
     <Content
     style={{
       margin: '24px 16px',
-      padding: 24,
+      padding: 10,
       minHeight: 280,
       background: colorBgContainer,
       borderRadius: borderRadiusLG
     }}
     >
-    {loading && <div style={{ paddingTop: '30vh' }}><Spin tip="Loading" size="large"><div className="content" /></Spin></div>}
+    {companyDataLoading && <Spin size="large"></Spin>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {data && 
-    <>
-      <Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
-        <p>Unfortunately, your barcode was not found in our system. You can still view this example company page.</p>
-        <p>Check out the 'Scan Examples' page, for barcode examples.</p>
-      </Modal>
+    {companyData && 
+      <div style={{ padding: '10px' }}>
+        <Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
+          <p>Unfortunately, your barcode was not found in our system. You can still view this example.</p>
+          <p>Check out the 'Products' page for a list of all products or 'Scan Examples' page for barcode examples.</p>
+        </Modal>
 
-      {/* Section 1 */}
-      <Row justify="center">
-        <Col xs={24} sm={24} lg={8}>
-          <div className="section-title">
-            <div className="section-content">
-              <h2>{data.companyName}</h2>
-            </div>
-            <EthicalScore score={data.ethicalScore} size='large' showDesc={true} />
-          </div>
-          <div className="subsection">
-            <h2>Company information</h2>
-            <h4>Company Address:</h4><p>{data.address}</p>
-            <br></br>
-            <h4>Annual Revenue: {data.annualRevenue}</h4>
-            <h4>Website: <a href={data.website}>{data.website}</a></h4>
-          </div>
-        </Col>
-      </Row>
+        <h1>{companyData.companyName}</h1>
+        {/* Company Information */}
+        <Row gutter={[16, 16]}>
+          <Col xs={24} lg={8}>
+            <StyledCard title="Company Information" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={cardStyle}>
+              <Row gutter={[8, 8]}>
+                <Col span={16}>
+                  <p><strong>Location: </strong>{companyData.address}</p>
+                  <p><strong>Annual Revenue: </strong>{formatUsdCurrency(companyData.annualRevenue)}</p>
+                  <p><strong>Website: </strong><a href={companyData.website}>{companyData.website}</a></p>
+                </Col>
+                <Col span={8}>
+                  <div style={{display: 'flex', justifyContent: 'center'}}><EthicalScore score={companyData.ethicalScore} size='large' showDesc={true} /></div>
+                </Col>
+              </Row>
+            </StyledCard>
+          </Col>
 
-      {/* Section 2 */}
-      <Row justify="center">
-        <Col xs={24} sm={24} lg={8}>
-          <div className="section"><h2>Suggested Companies</h2></div>
-          <div className="subsection">
-            <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button type='link' size='large' onClick={() => handleSelectCompany()} >Example High Score</Button>
-            <EthicalScore score={15} size='small' showDesc={false}/>
-            </div>
-          </div>
-        </Col>
-      </Row>
+          {/* Scanned Product Information */}
+          <Col xs={24} lg={16}>
+            <StyledCard title="Product" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={cardStyle}>
+              <p><strong>Name:</strong> {productInfo.name}</p>
+              <p><strong>Description:</strong> {productInfo.description}</p>
+            </StyledCard>
+          </Col>
+        </Row>
 
-      {/* Section 3 */}
-      <Row justify="center">
-        <Col xs={24} sm={24} lg={8}>
-          <div className="section"><h2>Ethical Breakdown</h2></div>
-          <Collapse>
+        {/* Suggested Products */}
+        <StyledCard title="Suggested Products" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={{...cardStyle, ...{ marginTop: '20px' }}}>
+          <div style={{display: 'flex', alignContent: 'space-evenly'}}>
+            <Button type='link' size='large' style={{padding: 0}} onClick={() => handleSelectCompany()} >Astonish Kitchen Cleaner</Button>
+          </div>
+        </StyledCard>
+
+        {/* Ethical Breakdown */}
+        <StyledCard title="Ethical Breakdown" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={{...cardStyle, ...{ marginTop: '20px' }}}>
+          <Collapse style={{backgroundColor: '#dcf6e1'}}>
             <Panel header="Environment" key="1">
-              <p>The environmental breakdown for {data.companyName}: {temporaryText}</p>
+              <p>The environmental breakdown for {companyData.companyName}:  Here there would be a more detailed description of the ethics relating to the environment.</p>
             </Panel>
             <Panel header="People" key="2">
-              <p>The ethics involving people for {data.companyName}: {temporaryText}</p>
+              <p>The ethics involving people for {companyData.companyName}: Here there would be a more detailed description of the ethics relating to people.</p>
             </Panel>
             <Panel header="Animals" key="3">
-              <p>The ethics involving animals for {data.companyName}: {temporaryText}</p>
+              <p>The ethics involving animals for {companyData.companyName}: Here there would be a more detailed description of the ethics relating to animals.</p>
             </Panel>
             <Panel header="Politics" key="4">
-              <p>The ethics involving politics for {data.companyName}: {temporaryText}</p>
+              <p>The ethics involving politics for {companyData.companyName}: Here there would be a more detailed description of the ethics relating to politics.</p>
             </Panel>
           </Collapse>
-        </Col>
-      </Row>
-    </>}
+        </StyledCard>
+      </div>
+    }
     </Content>
   );
 };

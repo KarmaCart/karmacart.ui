@@ -86,13 +86,6 @@ const CompanyPage = ({setSelectedMenuKey}) => {
     }
   }, [shouldOpenModal]);
 
-  // Function to handle the selection of a company
-  const handleSelectCompany = () => {
-    const item = { pk: 'COMPANY#0048256296181'}
-    // Navigate to the company page
-    navigate('/company', { state: { barcode: { text: item.pk.replace('COMPANY#', '') } } });
-  };
-
   const cardBoardered = false;
   const cardBodyStyle = {padding: "2px 10px"};
   const cardStyle = {backgroundColor: '#ebfaeb'};
@@ -142,13 +135,6 @@ const CompanyPage = ({setSelectedMenuKey}) => {
             </StyledCard>
           </Col>
         </Row>
-
-        {/* Suggested Products */}
-        <StyledCard title="Suggested Products" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={{...cardStyle, ...{ marginTop: '20px' }}}>
-          <div style={{display: 'flex', alignContent: 'space-evenly'}}>
-            <Button type='link' size='large' style={{padding: 0}} onClick={() => handleSelectCompany()} >Astonish Kitchen Cleaner</Button>
-          </div>
-        </StyledCard>
 
         {/* Ethical Breakdown */}
         <StyledCard title="Ethical Breakdown" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={{...cardStyle, ...{ marginTop: '20px' }}}>

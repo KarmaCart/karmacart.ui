@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert, Button, Card } from 'antd';
+import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert, Card } from 'antd';
 import { useLocation } from 'react-router-dom';
 import EthicalScore from '../components/EthicalScore'
 import '../css/Section.css';
@@ -27,8 +26,6 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   useEffect(() => {
     setSelectedMenuKey(null);
   }, [setSelectedMenuKey]);
-
-  let navigate = useNavigate();
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   

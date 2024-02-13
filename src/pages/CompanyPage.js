@@ -83,7 +83,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
     }
   }, [shouldOpenModal]);
 
-  const cardBoardered = false;
+  const cardBordered = false;
   const cardBodyStyle = {padding: "2px 10px"};
   const cardStyle = {backgroundColor: '#ebfaeb'};
 
@@ -115,7 +115,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
         {/* Company Information */}
         <Row gutter={[16, 16]}>
           <Col xs={24} lg={12}>
-            <StyledCard title="Company Information" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={cardStyle}>
+            <StyledCard title="Company Information" bordered={cardBordered} bodyStyle={cardBodyStyle} style={cardStyle}>
               <Row gutter={[8, 8]}>
                 <Col span={16}>
                   <p><strong>Location: </strong>{companyData.address}</p>
@@ -131,7 +131,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
           {/* Scanned Product Information */}
           <Col xs={24} lg={12}>
-            <StyledCard title="Product" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={cardStyle}>
+            <StyledCard title="Product" bordered={cardBordered} bodyStyle={cardBodyStyle} style={cardStyle}>
               <p><strong>Name:</strong> {productInfo.name}</p>
               <p><strong>Description:</strong> {productInfo.description}</p>
             </StyledCard>
@@ -139,7 +139,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
         </Row>
 
         {/* Ethical Breakdown */}
-        <StyledCard title="Ethical Breakdown" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={{...cardStyle, ...{ marginTop: '20px' }}}>
+        <StyledCard title="Ethical Breakdown" bordered={cardBordered} bodyStyle={cardBodyStyle} style={{...cardStyle, ...{ marginTop: '20px' }}}>
           <Collapse style={{backgroundColor: '#dcf6e1'}}>
             <Panel header="Environment" key="1">
               <p>The environmental breakdown for {companyData.companyName}:  Here there would be a more detailed description of the ethics relating to the environment.</p>

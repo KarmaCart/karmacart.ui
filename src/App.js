@@ -62,6 +62,11 @@ const App = () => {
     }
   };
 
+  const handleAppTitleClick = () => {
+    // Navigate home.
+    navigate('/');
+  }
+
   const showDrawer = () => {
     setVisible(true);
   };
@@ -96,7 +101,9 @@ const App = () => {
         >
           {/* Placeholder to keep the title centered */}
           <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}><img src='/karmacart-logo.png' alt="logo" width={45} height={45} /></div>
-          <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: '20px' }}>KarmaCart</div>
+          <div style={{ flex: 1, textAlign: 'center' }}>
+            <Button type='link' size='large' style={{color: 'white', fontSize: '20px'}} onClick={() => {handleAppTitleClick()}}>KarmaCart</Button>
+          </div>
           {/* Hamburger Button */}
           <div style={{ flex: 1, textAlign: 'right' }}>
             <Button type="primary" onClick={showDrawer}> 

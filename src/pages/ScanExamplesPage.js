@@ -2,9 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import { SCAN_EXAMPLES_PAGE } from '../App';
+import styled from 'styled-components';
 import '../css/Section.css'
 
 const { Content } = Layout;
+
+const StyledCard = styled(Card)`
+.ant-card-head {
+  padding: 2px 10px;
+  border-bottom: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+`;
 
 const ScanExamplesPage = ({setSelectedMenuKey}) => {
   const {
@@ -49,51 +59,58 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
       setIsModalVisible(false);
   };
 
+  const cardBordered = false;
+  const cardBodyStyle = {padding: "2px 10px"};
+  const cardStyle = {backgroundColor: '#ebfaeb'};
+
   return(
     <Content
-      justify='center'
-      style={{
-        margin: '24px 16px',
-        padding: 24,
-        minHeight: 280,
-        background: colorBgContainer,
-        borderRadius: borderRadiusLG
-      }}
+    style={{
+      margin: '24px 16px',
+      padding: 20,
+      minHeight: 280,
+      background: colorBgContainer,
+      borderRadius: borderRadiusLG
+    }}
     >
-      <Row justify="center">
-        <Col xs={24} sm={18} md={16} lg={12} xl={10}>
-          <div className="section-title"><h2>Scan Examples</h2></div>
-          <div className="subsection">
-            <p>
-              This page offers example barcodes for use with the Scan page. 
-              (Ethical ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a>)
-            </p>
-            <p>
-               To use an example, visit this site on a second device then select an example below.
-            </p>
-          </div>
-          <List
-            grid={{ gutter: 16, column: 1 }}
-            dataSource={exampleFiles}
-            renderItem={exampleItem => (
-              <List.Item>
-                <Button type="primary" icon={<PictureOutlined />} onClick={() => showModal(exampleItem)} style={{ width: '100%' }}>
-                  {exampleItem.name}
-                </Button>
-              </List.Item>
-            )}
-          />
-        </Col>
-      </Row>
+      <div>
+        {/* Company Information */}
+        <Row gutter={[16, 16]} justify="center">
+          {/* Scan Examples */}
+          <Col xs={24} lg={10}>
+            <StyledCard title="Scan Examples" bordered={cardBordered} bodyStyle={cardBodyStyle} style={cardStyle}>
+              <p>
+                This page offers example barcodes for use with the Scan page. 
+                (Ethical ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a>)
+              </p>
+              <p>
+                To use an example, visit this site on a second device then select an example below.
+              </p>
+            </StyledCard>
+            <List
+              style={{paddingTop: '20px'}}
+              grid={{ gutter: 16, column: 1 }}
+              dataSource={exampleFiles}
+              renderItem={exampleItem => (
+                <List.Item>
+                  <Button type="primary" icon={<PictureOutlined />} onClick={() => showModal(exampleItem)} style={{ width: '100%' }}>
+                    {exampleItem.name}
+                  </Button>
+                </List.Item>
+              )}
+            />
+          </Col>
 
-      <Modal 
-        title={shownExample.name} 
-        open={isModalVisible} 
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <img src={shownExample.imagePath} alt="Example Preview" style={{ width: '100%' }} />
-      </Modal>
+          <Modal 
+            title={shownExample.name} 
+            open={isModalVisible} 
+            onCancel={handleCancel}
+            footer={null}
+          >
+            <img src={shownExample.imagePath} alt="Example Preview" style={{ width: '100%' }} />
+          </Modal>
+        </Row>
+      </div>
     </Content>
   );
 };

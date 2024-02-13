@@ -94,10 +94,13 @@ const CompanyPage = ({setSelectedMenuKey}) => {
       padding: 10,
       minHeight: 280,
       background: colorBgContainer,
-      borderRadius: borderRadiusLG
+      borderRadius: borderRadiusLG,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     }}
     >
-    {companyDataLoading && <Spin size="large"></Spin>}
+    {companyDataLoading && <div><Spin size="large"></Spin></div>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
     {companyData && 
       <div style={{ padding: '10px' }}>

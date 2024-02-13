@@ -73,16 +73,21 @@ const ProductsPage = ({setSelectedMenuKey}) => {
       margin: '24px 16px',
       background: colorBgContainer,
       borderRadius: borderRadiusLG,
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center',
+      padding: '20px',
+      display: 'flex',
+      justifyContent: 'center',
+      ...(loading) && {
+        alignItems: 'center'
+      }
     }}
     >
     {loading && <Spin size="large"></Spin>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {data && <div style={{ padding: '20px' }}>
-      <Table columns={columns} dataSource={data} />
-    </div>}
+    {data && 
+      <div>
+        <Table columns={columns} dataSource={data} />
+      </div>
+    }
     </Content>
   );
 };

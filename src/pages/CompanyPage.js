@@ -91,28 +91,30 @@ const CompanyPage = ({setSelectedMenuKey}) => {
     <Content
     style={{
       margin: '24px 16px',
-      padding: 10,
+      padding: 20,
       minHeight: 280,
       background: colorBgContainer,
       borderRadius: borderRadiusLG,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
+      ...(companyDataLoading) && {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     }}
     >
-    {companyDataLoading && <div><Spin size="large"></Spin></div>}
+    {companyDataLoading && <Spin size="large"></Spin>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
     {companyData && 
-      <div style={{ padding: '10px' }}>
+      <div>
         <Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
           <p>Unfortunately, your barcode was not found in our system. You can still view this example.</p>
           <p>Check out the 'Products' page for a list of all products or 'Scan Examples' page for barcode examples.</p>
         </Modal>
 
-        <h1>{companyData.companyName}</h1>
+        <h1 style={{ margin: "0 0 10px 0" }}>{companyData.companyName}</h1>
         {/* Company Information */}
         <Row gutter={[16, 16]}>
-          <Col xs={24} lg={8}>
+          <Col xs={24} lg={12}>
             <StyledCard title="Company Information" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={cardStyle}>
               <Row gutter={[8, 8]}>
                 <Col span={16}>
@@ -128,7 +130,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
           </Col>
 
           {/* Scanned Product Information */}
-          <Col xs={24} lg={16}>
+          <Col xs={24} lg={12}>
             <StyledCard title="Product" bordered={cardBoardered} bodyStyle={cardBodyStyle} style={cardStyle}>
               <p><strong>Name:</strong> {productInfo.name}</p>
               <p><strong>Description:</strong> {productInfo.description}</p>

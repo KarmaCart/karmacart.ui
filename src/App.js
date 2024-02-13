@@ -107,14 +107,14 @@ const App = () => {
         <Drawer title="Menu" width="220px" placement="right" onClick={onClose} onClose={onClose} open={visible}>
           <Menu selectedKeys={[menuKey]} mode="inline" items={items} onClick={handleMenuClick} />
         </Drawer>
-          <Routes>
-            <Route path="/" element={<HomePage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/scan" element={<ScanPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/company" element={<CompanyPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/products" element={<ProductsPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/scan-examples" element={<ScanExamplesPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-            <Route path="/more-info" element={<MoreInfoPage setSelectedMenuKey={setSelectedMenuKey}/>} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<HomePage setSelectedMenuKey={setSelectedMenuKey}/>} />
+          <Route path="/scan" element={<ScanPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+          <Route path="/company" element={<CompanyPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+          <Route path="/products" element={<ProductsPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+          <Route path="/scan-examples" element={<ScanExamplesPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+          <Route path="/more-info" element={<MoreInfoPage setSelectedMenuKey={setSelectedMenuKey}/>} />
+        </Routes>
         <Footer
           style={{
             textAlign: 'center'

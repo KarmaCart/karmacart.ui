@@ -36,7 +36,7 @@ const BarcodeScanner = ({
     const didStart = html5QrcodeScanner
       .start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: getQrBoxSize() },
+        { fps: 10, qrbox: getQrBoxSize(), useBarCodeDetectorIfSupported: true },
         (_, { result }) => {
           memoizedResultHandler.current(result);
         },

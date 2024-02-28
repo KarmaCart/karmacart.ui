@@ -18,28 +18,56 @@ const ProductsPage = ({setSelectedMenuKey}) => {
     setSelectedMenuKey(PRODUCTS_PAGE);
   }, [setSelectedMenuKey]);
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Product data combined with company data
+  const [productData, setProductData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`https://karma-cart-api-eng.andersbuck.dev/company`)
-        .then(response => {
-            if (200 === response.status) {
-                return response.data;
+    // Function to fetch data from both APIs and combine the results
+    const fetchData = async () => {
+      try {
+        const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev/'
+        const urls = ['product', 'company']; // Replace with your actual API URLs
+        const allPromises = urls.map(url => 
+          axios.get(karmacartApiHost + url)
+            .then(response => {
+              if (200 === response.status) {
+                  return response.data;
+              }
+              throw new Error('Network response was not ok.');
+            }));
+        
+        // Wait for all promises to resolve
+        const results = await Promise.all(allPromises);
+
+        // Join Product and Company data to build the product data view.
+        const productData = []
+        for (const product of results[0]) {
+          for (const company of results[1]) {
+
+            if (company.pk ===  product.pk) {
+              // Join to the Company data to get the ethical score.
+              productData.push({
+                productName: product.productName,
+                ethicalScore: company.ethicalScore
+              })
+              break;
             }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            setData(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('There was a problem with the get companies operation:', error);
-            setError(error);
-            setLoading(false);
-        });
-  }, []);
+          }
+        }
+        
+        setProductData(productData);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setError(error);
+      } finally {
+        setIsLoading(false); // Update loading state
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once on mount
 
   // Function to handle the selection of a company
   const handleSelectCompany = (record) => {
@@ -50,8 +78,8 @@ const ProductsPage = ({setSelectedMenuKey}) => {
   let columns = [
     {
       title: 'Product',
-      dataIndex: 'companyName',
-      key: 'companyName',
+      dataIndex: 'productName',
+      key: 'productName',
       render: (text, record) => <><Button type="link" size={'large'} onClick={() => handleSelectCompany(record)} style={{padding: 0}}>{text}</Button></>,
     },
     {
@@ -76,16 +104,16 @@ const ProductsPage = ({setSelectedMenuKey}) => {
       padding: '20px',
       display: 'flex',
       justifyContent: 'center',
-      ...(loading) && {
+      ...(isLoading) && {
         alignItems: 'center'
       }
     }}
     >
-    {loading && <Spin size="large"></Spin>}
+    {isLoading && <Spin size="large"></Spin>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {data && 
+    {productData && 
       <div>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={productData} />
       </div>
     }
     </Content>

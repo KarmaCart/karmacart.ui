@@ -42,7 +42,8 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   console.log(`Rendering ItemPage with barcode: ${JSON.stringify(location.state.barcode)}`);
 
   const [companyData, setCompanyData] = useState(null);
-  const [companyDataLoading, setCompanyDataLoading] = useState(true);
+  const [productData, setProductData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const formatUsdCurrency = (number) => {
@@ -55,27 +56,43 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   }
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev/'
+        await axios.get(`${karmacartApiHost}product/${barcodeText}`)
+                .then(response => {
+                  if (200 === response.status) {
+                      return response.data;
+                  }
+                  throw new Error('Network response was not ok.');
+                })
+                .then(productData => {
+                  setProductData(productData)
+                  return productData.pk.replace('COMPANY#', '')
+                })
+                .then(companyId => {
+                  return axios.get(`${karmacartApiHost}company/${companyId}`)
+                })
+                .then(response => {
+                  if (200 === response.status) {
+                      return response.data;
+                  }
+                  throw new Error('Network response was not ok.');
+                })
+                .then(companyData => {
+                  setCompanyData(companyData)
+                });
+                
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setError(error);
+      } finally {
+        setIsLoading(false); // Update loading state
+      }
+    };
 
-    axios.get(`https://karma-cart-api-eng.andersbuck.dev/company/${barcodeText}`)
-        .then(response => {
-            if (200 === response.status) {
-                return response.data;
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            setCompanyData(data);
-            setCompanyDataLoading(false);
-        })
-        .catch(error => {
-            console.error('There was a problem with the get company operation:', error);
-            setError(error);
-            setCompanyDataLoading(false);
-        });
-  }, [barcodeText]);
-
-  // Mock Product Info
-  const productInfo = { name: "Product X", description: "Description of Product X" };
+    fetchData();
+  }, [barcodeText]); // Empty dependency array means this effect runs once on mount
 
   useEffect(() => {
     if (shouldOpenModal) {
@@ -95,16 +112,16 @@ const CompanyPage = ({setSelectedMenuKey}) => {
       minHeight: 280,
       background: colorBgContainer,
       borderRadius: borderRadiusLG,
-      ...(companyDataLoading) && {
+      ...(isLoading) && {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
       }
     }}
     >
-    {companyDataLoading && <Spin size="large"></Spin>}
+    {isLoading && <Spin size="large"></Spin>}
     {error && <div><Alert message="Error" description="Error occurred loading data, please try again later." type="error" showIcon/></div>}
-    {companyData && 
+    {companyData && productData && 
       <div>
         <Modal title="Barcode Not Found" open={isModalOpen} onOk={handleOk} onCancel={handleOk}>
           <p>Unfortunately, your barcode was not found in our system. You can still view this example.</p>
@@ -132,8 +149,8 @@ const CompanyPage = ({setSelectedMenuKey}) => {
           {/* Scanned Product Information */}
           <Col xs={24} lg={12}>
             <StyledCard title="Product" bordered={cardBordered} bodyStyle={cardBodyStyle} style={cardStyle}>
-              <p><strong>Name:</strong> {productInfo.name}</p>
-              <p><strong>Description:</strong> {productInfo.description}</p>
+              <p><strong>Name:</strong> {productData.productName}</p>
+              <p><strong>Description:</strong> {productData.productDescription}</p>
             </StyledCard>
           </Col>
         </Row>

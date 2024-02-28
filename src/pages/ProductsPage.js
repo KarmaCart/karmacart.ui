@@ -49,6 +49,7 @@ const ProductsPage = ({setSelectedMenuKey}) => {
             if (company.pk ===  product.pk) {
               // Join to the Company data to get the ethical score.
               productData.push({
+                barcodeText: product.sk.replace('PRODUCT#', ''),
                 productName: product.productName,
                 ethicalScore: company.ethicalScore
               })
@@ -72,7 +73,7 @@ const ProductsPage = ({setSelectedMenuKey}) => {
   // Function to handle the selection of a company
   const handleSelectCompany = (record) => {
     // Navigate to the company page
-    navigate('/company', { state: { barcode: { text: record.pk.replace('COMPANY#', '') } } });
+    navigate('/company', { state: { barcode: { text: record.barcodeText } } });
   };
 
   let columns = [

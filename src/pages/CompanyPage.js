@@ -3,7 +3,7 @@ import { Row, Col, Collapse, Layout, theme, Modal, Spin, Alert, Card } from 'ant
 import { useLocation } from 'react-router-dom';
 import EthicalScore from '../components/EthicalScore'
 import '../css/Section.css';
-import axios from 'axios';
+import axios, { AxiosError, HttpStatusCode } from 'axios';
 import styled from 'styled-components';
 
 const { Content } = Layout;
@@ -35,6 +35,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   
   const location = useLocation();
   let barcodeText = location.state.barcode.text;
+  // Pad the barcode so it is always the appropriate standard barcode length
   barcodeText = barcodeText.padStart(13, '0');
 
   let shouldOpenModal = false;
@@ -56,33 +57,53 @@ const CompanyPage = ({setSelectedMenuKey}) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProductAndCompanyData = async (productBarcode) => {
+      const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev/'
+      await axios.get(`${karmacartApiHost}product/${productBarcode}`)
+              .then(response => {
+                if (HttpStatusCode.Ok === response.status) {
+                    return response.data;
+                }
+                throw new Error('Network response was not ok.');
+              })
+              .then(productData => {
+                setProductData(productData)
+                return productData.pk.replace('COMPANY#', '')
+              })
+              .then(companyId => {
+                return axios.get(`${karmacartApiHost}company/${companyId}`)
+              })
+              .then(response => {
+                if (HttpStatusCode.Ok === response.status) {
+                    return response.data;
+                }
+                throw new Error('Network response was not ok.');
+              })
+              .then(companyData => {
+                setCompanyData(companyData)
+              });
+              
+    }
+
+    const fetchPageData = async () => {
       try {
-        const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev/'
-        await axios.get(`${karmacartApiHost}product/${barcodeText}`)
-                .then(response => {
-                  if (200 === response.status) {
-                      return response.data;
-                  }
-                  throw new Error('Network response was not ok.');
-                })
-                .then(productData => {
-                  setProductData(productData)
-                  return productData.pk.replace('COMPANY#', '')
-                })
-                .then(companyId => {
-                  return axios.get(`${karmacartApiHost}company/${companyId}`)
-                })
-                .then(response => {
-                  if (200 === response.status) {
-                      return response.data;
-                  }
-                  throw new Error('Network response was not ok.');
-                })
-                .then(companyData => {
-                  setCompanyData(companyData)
-                });
-                
+        try {
+          await fetchProductAndCompanyData(barcodeText);
+        } catch(err) {
+          if (err instanceof AxiosError) {
+            if (HttpStatusCode.NotFound === err.response?.status) {
+              // If a barcode wasn't found then load a random Company page for a random Product.
+              const productBarcodes = ['0048256296181', '8901764012273', '0817939012390', '0815796020008']
+              const randomIndex = Math.floor(Math.random() * productBarcodes.length)
+              await fetchProductAndCompanyData(productBarcodes[randomIndex]);
+              setIsModalOpen(true)
+            } else {
+              throw err
+            }
+          } else {
+            throw err
+          }
+        }
       } catch (error) {
         console.error('Failed to fetch data:', error);
         setError(error);
@@ -91,7 +112,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
       }
     };
 
-    fetchData();
+    fetchPageData();
   }, [barcodeText]); // Empty dependency array means this effect runs once on mount
 
   useEffect(() => {

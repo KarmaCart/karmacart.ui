@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Html5Qrcode } from 'html5-qrcode';
+import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 
 const BarcodeScanner = ({
   onResult = () => {},
@@ -32,11 +32,26 @@ const BarcodeScanner = ({
     if (!readerRef.current) return;
 
     // Initialize the Scanner
-    const html5QrcodeScanner = new Html5Qrcode(readerRef.current.id);
+    const html5QrcodeScanner = new Html5Qrcode(readerRef.current.id,
+      {
+        useBarCodeDetectorIfSupported: true,
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.CODABAR,
+          Html5QrcodeSupportedFormats.CODE_128,
+          Html5QrcodeSupportedFormats.CODE_39,
+          Html5QrcodeSupportedFormats.CODE_93,
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.ITF,
+          Html5QrcodeSupportedFormats.UPC_A,
+          Html5QrcodeSupportedFormats.UPC_E,
+          Html5QrcodeSupportedFormats.UPC_EAN_EXTENSION
+        ]
+      });
     const didStart = html5QrcodeScanner
       .start(
         { facingMode: 'environment' },
-        { fps: 30, qrbox: getQrBoxSize(), useBarCodeDetectorIfSupported: true },
+        { fps: 30, qrbox: getQrBoxSize()},
         (_, { result }) => {
           memoizedResultHandler.current(result);
         },

@@ -58,8 +58,8 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
   useEffect(() => {
     const fetchProductAndCompanyData = async (productBarcode) => {
-      const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev/'
-      await axios.get(`${karmacartApiHost}product/${productBarcode}`)
+      const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev'
+      await axios.get(`${karmacartApiHost}/product/${productBarcode}`)
               .then(response => {
                 if (HttpStatusCode.Ok === response.status) {
                     return response.data;
@@ -71,7 +71,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
                 return productData.pk.replace('COMPANY#', '')
               })
               .then(companyId => {
-                return axios.get(`${karmacartApiHost}company/${companyId}`)
+                return axios.get(`${karmacartApiHost}/company/${companyId}`)
               })
               .then(response => {
                 if (HttpStatusCode.Ok === response.status) {
@@ -93,9 +93,18 @@ const CompanyPage = ({setSelectedMenuKey}) => {
           if (err instanceof AxiosError) {
             if (HttpStatusCode.NotFound === err.response?.status) {
               // If a barcode wasn't found then load a random Company page for a random Product.
-              const productBarcodes = ['0048256296181', '8901764012273', '0817939012390', '0815796020008']
-              const randomIndex = Math.floor(Math.random() * productBarcodes.length)
-              await fetchProductAndCompanyData(productBarcodes[randomIndex]);
+              const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev'
+              await axios.get(`${karmacartApiHost}/product`)
+                      .then(response => {
+                        if (HttpStatusCode.Ok === response.status) {
+                            return response.data;
+                        }
+                        throw new Error('Network response was not ok.');
+                      })
+                      .then(products => {
+                        const randomIndex = Math.floor(Math.random() * products.length)
+                        return fetchProductAndCompanyData(products[randomIndex].sk.replace('PRODUCT#', ''));
+                      });
               setIsModalOpen(true)
             } else {
               throw err

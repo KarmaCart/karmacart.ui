@@ -14,9 +14,9 @@ const BarcodeScanner = ({
     const width = window.innerWidth;
     // Set the size of the qrBox based on the screen width
     if (width < 600) {
-        return 230;
+        return 180;
     } else {
-        return 300; 
+        return 250; 
     }
   };
 
@@ -36,7 +36,7 @@ const BarcodeScanner = ({
     const didStart = html5QrcodeScanner
       .start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: getQrBoxSize(), useBarCodeDetectorIfSupported: true },
+        { fps: 30, qrbox: getQrBoxSize(), useBarCodeDetectorIfSupported: true },
         (_, { result }) => {
           memoizedResultHandler.current(result);
         },

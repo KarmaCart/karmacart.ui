@@ -15,6 +15,7 @@ import ScanExamplesPage from './pages/ScanExamplesPage';
 import MoreInfoPage from './pages/MoreInfoPage';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
+
 const { Header, Footer } = Layout;
 
 export const HOME_PAGE = 'HOME_PAGE';

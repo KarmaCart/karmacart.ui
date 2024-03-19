@@ -4,6 +4,7 @@ import { Button, Spin, Alert, theme, Layout, Table, Tooltip} from 'antd';
 import axios from 'axios';
 import { PRODUCTS_PAGE } from '../App';
 import EthicalScore from '../components/EthicalScore';
+import { KARMACART_API_URL } from '../utils/ApiUtils';
 
 const { Content } = Layout;
 
@@ -27,10 +28,9 @@ const ProductsPage = ({setSelectedMenuKey}) => {
     // Function to fetch data from both APIs and combine the results
     const fetchData = async () => {
       try {
-        const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev/'
-        const urls = ['product', 'company']; // Replace with your actual API URLs
+        const urls = ['/product', '/company']; // Replace with your actual API URLs
         const allPromises = urls.map(url => 
-          axios.get(karmacartApiHost + url)
+          axios.get(KARMACART_API_URL + url)
             .then(response => {
               if (200 === response.status) {
                   return response.data;

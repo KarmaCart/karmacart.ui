@@ -5,6 +5,7 @@ import EthicalScore from '../components/EthicalScore'
 import '../css/Section.css';
 import axios, { AxiosError, HttpStatusCode } from 'axios';
 import styled from 'styled-components';
+import { KARMACART_API_URL } from '../utils/ApiUtils';
 
 const { Content } = Layout;
 const { Panel } = Collapse;
@@ -58,8 +59,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
 
   useEffect(() => {
     const fetchProductAndCompanyData = async (productBarcode) => {
-      const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev'
-      await axios.get(`${karmacartApiHost}/product/${productBarcode}`)
+      await axios.get(`${KARMACART_API_URL}/product/${productBarcode}`)
               .then(response => {
                 if (HttpStatusCode.Ok === response.status) {
                     return response.data;
@@ -71,7 +71,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
                 return productData.pk.replace('COMPANY#', '')
               })
               .then(companyId => {
-                return axios.get(`${karmacartApiHost}/company/${companyId}`)
+                return axios.get(`${KARMACART_API_URL}/company/${companyId}`)
               })
               .then(response => {
                 if (HttpStatusCode.Ok === response.status) {
@@ -93,8 +93,7 @@ const CompanyPage = ({setSelectedMenuKey}) => {
           if (err instanceof AxiosError) {
             if (HttpStatusCode.NotFound === err.response?.status) {
               // If a barcode wasn't found then load a random Company page for a random Product.
-              const karmacartApiHost = 'https://karma-cart-api-eng.andersbuck.dev'
-              await axios.get(`${karmacartApiHost}/product`)
+              await axios.get(`${KARMACART_API_URL}/product`)
                       .then(response => {
                         if (HttpStatusCode.Ok === response.status) {
                             return response.data;

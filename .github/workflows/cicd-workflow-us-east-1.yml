@@ -22,6 +22,7 @@ jobs:
     steps:
       - name: Determine AWS Account variables
         run: |
+          echo "KARMACART_ENVIRONMENT=${{ github.event.inputs.karmacart-environment }}" >> $GITHUB_ENV
           if [ "${{ github.event.inputs.karmacart-environment }}" = "eng" ]; then 
             echo "CROSS_ACCOUNT_ROLE_ARN=arn:aws:iam::${{ secrets.ENG_AWS_ACCOUNT_NUMBER }}:role/git-action-cross-account-role" >> $GITHUB_ENV
             echo "AWS_ACCOUNT_NUMBER=${{ secrets.ENG_AWS_ACCOUNT_NUMBER }}" >> $GITHUB_ENV

@@ -61,8 +61,8 @@ const ScanPage = ({setSelectedMenuKey}) => {
       alignItems: 'center',
     }}
     >
-    <div style={{ display: 'flex', justifyContent: 'end', width: getQrBoxSize() }}>
-      <Button type="link" onClick={showModal}>What is this?</Button>
+    <div style={{ margin: 'auto', maxWidth: getQrBoxSize() }}>
+      <Button type="link" onClick={showModal} style={{padding: '0'}}>What is this?</Button>
     </div>
     <BarcodeScanner
                 onResult={handleScanSuccess}

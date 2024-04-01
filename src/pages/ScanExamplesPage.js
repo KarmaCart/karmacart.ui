@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd';
-import { PictureOutlined } from '@ant-design/icons';
-import { SCAN_EXAMPLES_PAGE } from '../App';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react'
+import { Layout, theme, Row, Col, List, Button, Card, Modal } from 'antd'
+import { PictureOutlined } from '@ant-design/icons'
+import { SCAN_EXAMPLES_PAGE } from '../App'
+import styled from 'styled-components'
 import '../css/Section.css'
+import PropTypes from 'prop-types'
 
-const { Content } = Layout;
+const { Content } = Layout
 
 const StyledCard = styled(Card)`
 .ant-card-head {
@@ -14,56 +15,56 @@ const StyledCard = styled(Card)`
   font-size: 24px;
   font-weight: bold;
 }
-`;
+`
 
-const ScanExamplesPage = ({setSelectedMenuKey}) => {
+const ScanExamplesPage = ({ setSelectedMenuKey }) => {
   const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [shownExample, setShownExample] = useState('');
+    token: { colorBgContainer, borderRadiusLG }
+  } = theme.useToken()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [shownExample, setShownExample] = useState('')
 
   useEffect(() => {
-    setSelectedMenuKey(SCAN_EXAMPLES_PAGE);
-  }, [setSelectedMenuKey]);
+    setSelectedMenuKey(SCAN_EXAMPLES_PAGE)
+  }, [setSelectedMenuKey])
 
   const exampleFiles = [
     {
       name: 'Astonish Kitchen Cleaner',
       description: "Example of 'Astonish Kitchen Cleaner' barcode:",
-      imagePath: '/astonish-barcode.png',
+      imagePath: '/astonish-barcode.png'
     },
     {
       name: 'Method All-Purpose Cleaner',
       description: "Example of 'Method All-Purpose Cleaner' barcode:",
-      imagePath: '/method-barcode.png',
+      imagePath: '/method-barcode.png'
     },
     {
       name: 'Cawston Press Soft Drink',
       description: "Example of 'Cawston Press Soft Drink' barcode:",
-      imagePath: '/cawston-barcode.png',
+      imagePath: '/cawston-barcode.png'
     },
     {
       name: 'Coca Cola',
       description: "Example of 'Coca Cola' barcode:",
-      imagePath: '/coca-cola-barcode.png',
+      imagePath: '/coca-cola-barcode.png'
     }
-  ];
+  ]
 
   const showModal = (exampleItem) => {
-    setShownExample(exampleItem);
-    setIsModalVisible(true);
-  };
+    setShownExample(exampleItem)
+    setIsModalVisible(true)
+  }
 
   const handleCancel = () => {
-      setIsModalVisible(false);
-  };
+    setIsModalVisible(false)
+  }
 
-  const cardBordered = false;
-  const cardBodyStyle = {padding: "2px 10px"};
-  const cardStyle = {backgroundColor: '#ebfaeb'};
+  const cardBordered = false
+  const cardBodyStyle = { padding: '2px 10px' }
+  const cardStyle = { backgroundColor: '#ebfaeb' }
 
-  return(
+  return (
     <Content
     style={{
       margin: '24px 16px',
@@ -80,7 +81,7 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
           <Col xs={24} lg={10}>
             <StyledCard title="Scan Examples" bordered={cardBordered} bodyStyle={cardBodyStyle} style={cardStyle}>
               <p>
-                This page offers example barcodes for use with the Scan page. 
+                This page offers example barcodes for use with the Scan page.
                 (Ethical ratings sourced from <a href='https://www.ethicalconsumer.org/'>https://www.ethicalconsumer.org/</a>)
               </p>
               <p>
@@ -88,7 +89,7 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
               </p>
             </StyledCard>
             <List
-              style={{paddingTop: '20px'}}
+              style={{ paddingTop: '20px' }}
               grid={{ gutter: 16, column: 1 }}
               dataSource={exampleFiles}
               renderItem={exampleItem => (
@@ -101,9 +102,9 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
             />
           </Col>
 
-          <Modal 
-            title={shownExample.name} 
-            open={isModalVisible} 
+          <Modal
+            title={shownExample.name}
+            open={isModalVisible}
             onCancel={handleCancel}
             footer={null}
           >
@@ -112,7 +113,11 @@ const ScanExamplesPage = ({setSelectedMenuKey}) => {
         </Row>
       </div>
     </Content>
-  );
-};
+  )
+}
 
-export default ScanExamplesPage;
+export default ScanExamplesPage
+
+ScanExamplesPage.propTypes = {
+  setSelectedMenuKey: PropTypes.func
+}

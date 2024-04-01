@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
-import { Layout, theme, Row, Col, Button, Tag } from 'antd';
-import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
-import { MORE_INFO_PAGE } from '../App';
-import './MoreInfoPage.css'; 
+import React, { useEffect } from 'react'
+import { Layout, theme, Row, Col, Tag } from 'antd'
+import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons'
+import { MORE_INFO_PAGE } from '../App'
+import './MoreInfoPage.css'
+import PropTypes from 'prop-types'
 
-const { Content } = Layout;
+const { Content } = Layout
 
-const MoreInfoPage = ({setSelectedMenuKey}) => {
+const MoreInfoPage = ({ setSelectedMenuKey }) => {
   const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+    token: { colorBgContainer, borderRadiusLG }
+  } = theme.useToken()
 
   useEffect(() => {
-    setSelectedMenuKey(MORE_INFO_PAGE);
-  }, [setSelectedMenuKey]);
+    setSelectedMenuKey(MORE_INFO_PAGE)
+  }, [setSelectedMenuKey])
 
   const socialLinks = [
     {
@@ -33,11 +34,11 @@ const MoreInfoPage = ({setSelectedMenuKey}) => {
       icon: <MailOutlined />,
       url: 'mailto:andersbuck.dev@gmail.com',
       color: '#c71610'
-    },
-    
-  ];
+    }
 
-  return(
+  ]
+
+  return (
   <Content
     style={{
       margin: '24px 16px',
@@ -64,7 +65,11 @@ const MoreInfoPage = ({setSelectedMenuKey}) => {
       </Row>
     </div>
   </Content>
-  );
-};
+  )
+}
 
 export default MoreInfoPage
+
+MoreInfoPage.propTypes = {
+  setSelectedMenuKey: PropTypes.func
+}

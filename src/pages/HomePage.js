@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { Layout, theme, Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { HOME_PAGE } from '../App';
+import React, { useEffect } from 'react'
+import { Layout, theme, Button } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { HOME_PAGE } from '../App'
+import PropTypes from 'prop-types'
 
-const { Content } = Layout;
+const { Content } = Layout
 
 const titleStyle = {
   fontSize: '48px', // Large font size
@@ -13,21 +14,21 @@ const titleStyle = {
   paddingBottom: '20px', // Padding around the text
   textAlign: 'center', // Center the text
   maxWidth: '600px', // Max width to keep the title size manageable
-  margin: '0 auto', // Center the title block in the parent element
-};
+  margin: '0 auto' // Center the title block in the parent element
+}
 
-const HomePage = ({setSelectedMenuKey}) => {
+const HomePage = ({ setSelectedMenuKey }) => {
   const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+    token: { colorBgContainer, borderRadiusLG }
+  } = theme.useToken()
 
-  let navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setSelectedMenuKey(HOME_PAGE);
-  }, [setSelectedMenuKey]);
+    setSelectedMenuKey(HOME_PAGE)
+  }, [setSelectedMenuKey])
 
-  return(
+  return (
   <Content
     style={{
       margin: '24px 16px',
@@ -40,13 +41,17 @@ const HomePage = ({setSelectedMenuKey}) => {
   >
     <img src='/karmacart-logo-title.png' alt="logo-title" width={250} height={250} />
     <div style={titleStyle}>KarmaCart</div>
-    <h2 style={{margin: '0'}}>Scan & Discover:</h2>
-    <p style={{fontSize: '16px', margin: '0', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto'}}>
+    <h2 style={{ margin: '0' }}>Scan & Discover:</h2>
+    <p style={{ fontSize: '16px', margin: '0', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
       KarmaCart aims to be a comprehensive tool for consumers to navigate the ethical and sustainability of products, empowering them to make informed and impactful choices.
     </p>
-    <Button type="primary" size="large" style={{margin: '10px'}} onClick={() => {navigate('/scan');}}>Scan First Item</Button>
+    <Button type="primary" size="large" style={{ margin: '10px' }} onClick={() => { navigate('/scan') }}>Scan First Item</Button>
   </Content>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage
+
+HomePage.propTypes = {
+  setSelectedMenuKey: PropTypes.func
+}

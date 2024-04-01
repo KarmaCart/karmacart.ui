@@ -1,7 +1,7 @@
 {
     "root": true,
     "env": {
-        "browser": true,
+        "node": true,
         "es2022": true
     },
     "extends": [
@@ -17,5 +17,6 @@
         "@typescript-eslint"
     ],
     "rules": {
-    }
+    },
+    "ignorePatterns": ["dist", "node_modules"]
 }

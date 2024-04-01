@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   MenuOutlined,
   HomeOutlined,
@@ -6,75 +6,74 @@ import {
   ScanOutlined,
   DownloadOutlined,
   InfoCircleOutlined
-} from '@ant-design/icons';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd';
-import ScanPage from './pages/ScanPage';
-import CompanyPage from './pages/CompanyPage';
-import ScanExamplesPage from './pages/ScanExamplesPage';
-import MoreInfoPage from './pages/MoreInfoPage';
-import HomePage from './pages/HomePage';
-import ProductsPage from './pages/ProductsPage';
+} from '@ant-design/icons'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Layout, Menu, Button, Drawer, ConfigProvider } from 'antd'
+import ScanPage from './pages/ScanPage'
+import CompanyPage from './pages/CompanyPage'
+import ScanExamplesPage from './pages/ScanExamplesPage'
+import MoreInfoPage from './pages/MoreInfoPage'
+import HomePage from './pages/HomePage'
+import ProductsPage from './pages/ProductsPage'
 
-const { Header, Footer } = Layout;
+const { Header, Footer } = Layout
 
-export const HOME_PAGE = 'HOME_PAGE';
-export const PRODUCTS_PAGE = 'COMPANIES_PAGE';
-export const SCAN_PAGE = 'SCAN_PAGE';
-export const SCAN_EXAMPLES_PAGE = 'SCAN_EXAMPLES_PAGE';
-export const MORE_INFO_PAGE = 'MORE_INFO_PAGE';
+export const HOME_PAGE = 'HOME_PAGE'
+export const PRODUCTS_PAGE = 'COMPANIES_PAGE'
+export const SCAN_PAGE = 'SCAN_PAGE'
+export const SCAN_EXAMPLES_PAGE = 'SCAN_EXAMPLES_PAGE'
+export const MORE_INFO_PAGE = 'MORE_INFO_PAGE'
 
 const App = () => {
+  const [visible, setVisible] = useState(false)
+  const [menuKey, setSelectedMenuKey] = useState(null)
 
-  const [visible, setVisible] = useState(false);
-  const [menuKey, setSelectedMenuKey] = useState(null);
+  const navigate = useNavigate()
 
-  let navigate = useNavigate();
-
-  function getItem(label, key, icon, children) {
+  function getItem (label, key, icon, children) {
     return {
       key,
       icon,
       children,
-      label,
-    };
+      label
+    }
   }
-  
+
   const items = [
     getItem('Home', HOME_PAGE, <HomeOutlined />),
     getItem('Products', PRODUCTS_PAGE, <ShoppingOutlined />),
     getItem('Scan', SCAN_PAGE, <ScanOutlined />),
     getItem('Scan Examples', SCAN_EXAMPLES_PAGE, <DownloadOutlined />),
-    getItem('More Info', MORE_INFO_PAGE, <InfoCircleOutlined />),
-  ];
+    getItem('More Info', MORE_INFO_PAGE, <InfoCircleOutlined />)
+  ]
 
   const handleMenuClick = (e) => {
-    console.log('Menu item clicked:', e.key);
+    console.log('Menu item clicked:', e.key)
     if (HOME_PAGE === e.key) {
-      navigate('/');
+      navigate('/')
     } else if (PRODUCTS_PAGE === e.key) {
-      navigate('/products');
+      navigate('/products')
     } else if (SCAN_PAGE === e.key) {
-      navigate('/scan');
+      navigate('/scan')
     } else if (SCAN_EXAMPLES_PAGE === e.key) {
-      navigate('/scan-examples');
+      navigate('/scan-examples')
     } else if (MORE_INFO_PAGE === e.key) {
-      navigate('/more-info');
+      navigate('/more-info')
     }
-  };
+  }
 
   const handleAppTitleClick = () => {
     // Navigate home.
-    navigate('/');
+    navigate('/')
   }
 
   const showDrawer = () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
   const onClose = () => {
-    setVisible(false);
-  };
+    setVisible(false)
+  }
 
   return (
       <ConfigProvider
@@ -82,12 +81,12 @@ const App = () => {
           token: {
             // Seed Token
             colorPrimary: '#6BBA78'
-          },
+          }
         }}
       >
       <Layout
       style={{
-        minHeight: '100vh',
+        minHeight: '100vh'
       }}
       >
         <Header style={{
@@ -103,11 +102,11 @@ const App = () => {
           {/* Placeholder to keep the title centered */}
           <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}><img src='/karmacart-logo.png' alt="logo" width={45} height={45} /></div>
           <div style={{ flex: 1, textAlign: 'center' }}>
-            <Button type='link' size='large' style={{color: 'white', fontSize: '20px'}} onClick={() => {handleAppTitleClick()}}>KarmaCart</Button>
+            <Button type='link' size='large' style={{ color: 'white', fontSize: '20px' }} onClick={() => { handleAppTitleClick() }}>KarmaCart</Button>
           </div>
           {/* Hamburger Button */}
           <div style={{ flex: 1, textAlign: 'right' }}>
-            <Button type="primary" onClick={showDrawer}> 
+            <Button type="primary" onClick={showDrawer}>
               <MenuOutlined />
             </Button>
           </div>
@@ -132,6 +131,6 @@ const App = () => {
         </Footer>
     </Layout>
     </ConfigProvider>
-  );
-};
-export default App;
+  )
+}
+export default App

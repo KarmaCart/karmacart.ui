@@ -1,5 +1,5 @@
 name: KarmaCart UI Stack CICD Workflow (us-east-1)
-# This workflow is triggered on pushes to the repository branch master.
+# This workflow is triggered manually.
 on:
   workflow_dispatch:
     inputs:

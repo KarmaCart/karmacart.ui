@@ -1,3 +1,3 @@
 {
-  "app": "npx ts-node src/aws/app.ts"
+  "app": "npx ts-node aws-cdk/app.ts"
 }
